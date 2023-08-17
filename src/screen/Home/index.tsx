@@ -1,5 +1,12 @@
-const Home = () => {
-  return <div className="text-blue-500">h1</div>;
-};
+import Section from '../../motion/Section'
+import View from '../../motion/View'
 
-export default Home;
+const Home = () => {
+    return (
+        <Section>
+            <View className='p-2'>1</View>
+        </Section>
+    )
+}
+
+export default Home

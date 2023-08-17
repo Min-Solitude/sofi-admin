@@ -58,71 +58,90 @@ const Register = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
       exit={{ opacity: 0, x: -100 }}
-      className=" flex flex-col gap-6"
+      className=" flex flex-col gap-4"
       onSubmit={handleRegister}
     >
-      <input
-        type="text"
-        placeholder="Email"
-        className="rounded-full font-medium py-3 px-8 bg-transparent border focus:text-gray-800 placeholder:text-gray-300 border-gray-300 focus:outline-none focus:bg-gray-100  duration-200"
-        value={Email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <View className="w-full relative flex items-center">
+      <View className="flex flex-col gap-2">
+        <label htmlFor="email" className="text-gray-800 text-[0.9rem]">
+          Email
+        </label>
         <input
-          type={isShowPassword ? "text" : "password"}
-          placeholder="Mật khẩu"
-          value={Password}
-          className="rounded-full w-full font-medium  py-3 px-8 bg-transparent border focus:text-gray-800 placeholder:text-gray-300 border-gray-300 focus:outline-none focus:bg-gray-100  duration-200"
-          onChange={(e) => setPassword(e.target.value)}
+          type="text"
+          placeholder="Email"
+          className="rounded-lg text-[0.9rem] font-medium py-2 px-4 bg-transparent border focus:text-gray-800 placeholder:text-gray-300 border-gray-300 focus:outline-none focus:bg-gray-100  duration-200"
+          value={Email}
+          onChange={(e) => setEmail(e.target.value)}
+          id="email"
         />
-        <Button
-          className="absolute right-8 z-10 font-medium    flex justify-center items-center"
-          onClick={() => setIsShowPassword(!isShowPassword)}
-          type="button"
-        >
-          {isShowPassword ? (
-            <IonIcon
-              name="eye-outline"
-              className="text-gray-300 text-[1.6rem]"
-            />
-          ) : (
-            <IonIcon
-              name="eye-off-outline"
-              className="text-gray-300 text-[1.6rem]"
-            />
-          )}
-        </Button>
+      </View>
+      <View className="flex flex-col gap-2">
+        <label htmlFor="password" className="text-gray-800 text-[0.9rem]">
+          Mật khẩu
+        </label>
+
+        <View className="w-full relative flex items-center">
+          <input
+            type={isShowPassword ? "text" : "password"}
+            placeholder="Mật khẩu"
+            value={Password}
+            className="rounded-lg text-[0.9rem]  w-full font-medium  py-2 px-4 bg-transparent border focus:text-gray-800 placeholder:text-gray-300 border-gray-300 focus:outline-none focus:bg-gray-100  duration-200"
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+          />
+          <Button
+            className="absolute right-4 z-10 font-medium    flex justify-center items-center"
+            onClick={() => setIsShowPassword(!isShowPassword)}
+            type="button"
+          >
+            {isShowPassword ? (
+              <IonIcon
+                name="eye-outline"
+                className="text-gray-300 text-[1.6rem]"
+              />
+            ) : (
+              <IonIcon
+                name="eye-off-outline"
+                className="text-gray-300 text-[1.6rem]"
+              />
+            )}
+          </Button>
+        </View>
       </View>
 
-      <View className="w-full relative flex items-center">
-        <input
-          type={isShowPassword ? "text" : "password"}
-          placeholder="Nhập lại mật khẩu"
-          className="rounded-full w-full font-medium  py-3 px-8 bg-transparent border focus:text-gray-800 placeholder:text-gray-300 border-gray-300 focus:outline-none focus:bg-gray-100  duration-200"
-          value={RePassword}
-          onChange={(e) => setRePassword(e.target.value)}
-        />
-        <Button
-          type="button"
-          className="absolute right-8 z-10    flex justify-center items-center"
-          onClick={() => setIsShowPassword(!isShowPassword)}
-        >
-          {isShowPassword ? (
-            <IonIcon
-              name="eye-outline"
-              className="text-gray-300 text-[1.6rem]"
-            />
-          ) : (
-            <IonIcon
-              name="eye-off-outline"
-              className="text-gray-300 text-[1.6rem]"
-            />
-          )}
-        </Button>
+      <View className="flex flex-col gap-2">
+        <label htmlFor="re-password" className="text-gray-800 text-[0.9rem]">
+          Nhập lại mật khẩu
+        </label>
+        <View className="w-full relative flex items-center">
+          <input
+            type={isShowPassword ? "text" : "password"}
+            placeholder="Nhập lại mật khẩu"
+            className="rounded-lg text-[0.9rem] w-full font-medium  py-2 px-4 bg-transparent border focus:text-gray-800 placeholder:text-gray-300 border-gray-300 focus:outline-none focus:bg-gray-100  duration-200"
+            value={RePassword}
+            onChange={(e) => setRePassword(e.target.value)}
+            id="re-password"
+          />
+          <Button
+            type="button"
+            className="absolute right-4 z-10    flex justify-center items-center"
+            onClick={() => setIsShowPassword(!isShowPassword)}
+          >
+            {isShowPassword ? (
+              <IonIcon
+                name="eye-outline"
+                className="text-gray-300 text-[1.6rem]"
+              />
+            ) : (
+              <IonIcon
+                name="eye-off-outline"
+                className="text-gray-300 text-[1.6rem]"
+              />
+            )}
+          </Button>
+        </View>
       </View>
 
-      <Button className="mt-4  background-gradient text-white font-medium py-3 rounded-full">
+      <Button className=" mt-4 background-gradient text-white font-medium py-2 rounded-lg">
         Đăng ký
       </Button>
     </motion.form>
