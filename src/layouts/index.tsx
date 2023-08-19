@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import View from '../motion/View'
 import Navigation from './Navigation'
-import SideBar from './SideBar'
 import Header from './Header'
 
 type MainLayoutProps = {
@@ -14,7 +13,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
     useEffect(() => {
         const checkMobile = () => {
-            if (window.innerWidth <= 1024) {
+            if (window.innerWidth <= 1280) {
                 setCheckMobile(true)
             } else {
                 setCheckMobile(false)
@@ -27,11 +26,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     }, [])
 
     return (
-        <View>
-            {checkMobile ? <Navigation /> : <SideBar />}
-            <View className='min-h-screen  relative font-medium'>
-                <Header />
-                <main className='absolute top-[4rem] bg-white w-full mb-[10rem]'>{children}</main>
+        <View className='min-h-screen bg-white'>
+            {checkMobile ? <Navigation /> : null}
+            <Header />
+            <View className='lg:m-auto  lg:w-[80%]  xl:w-[60%] w-full bg-white  relative font-medium'>
+                <main className='absolute w-full mb-[10rem]'>
+                    <View className='mt-[4.5rem]'>{children}</View>
+                </main>
             </View>
         </View>
     )

@@ -29,7 +29,7 @@ const Account = () => {
             <View
                 className='w-[3rem] relative cursor-pointer h-[3rem] rounded-full  flex justify-center items-center '
                 whileTap={{ scale: 0.9 }}
-                onTap={() => setIsDropdown(!isDropdown)}
+                onClick={() => setIsDropdown(!isDropdown)}
             >
                 <img
                     src={
@@ -40,15 +40,15 @@ const Account = () => {
                     alt={accountLogin && accountLogin.displayName ? accountLogin.displayName : 'Anonymous'}
                     className='w-[3rem] h-[3rem] rounded-full object-cover border-2 border-primary'
                 />
-                <span className='w-4 h-4 rounded-full bg-green-500 absolute bottom-0 right-0 border-2 border-x-primary'></span>
+                <span className='w-4 h-4 rounded-full bg-green-500 absolute bottom-0 right-0 border-2 border-white'></span>
             </View>
 
             {isDropdown && (
                 <motion.div
-                    className='absolute -bottom-[1rem] w-[20rem] left-0 py-1 px-4 rounded-lg text-[0.9rem]   bg-white shadow-md flex items-start flex-col gap-2'
-                    initial={{ opacity: 0, x: -20, y: '100%' }}
+                    className='absolute -bottom-[1rem] w-[20rem] right-0 py-1 px-4 rounded-lg text-[0.9rem]   bg-white shadow-md flex items-start flex-col gap-2'
+                    initial={{ opacity: 0, x: 20, y: '100%' }}
                     animate={{ opacity: 1, x: 0, y: '100%' }}
-                    exit={{ opacity: 0, x: -20, y: '100%' }}
+                    exit={{ opacity: 0, x: 20, y: '100%' }}
                     transition={{ duration: 0.2 }}
                     ref={dropdownRef}
                 >

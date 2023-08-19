@@ -1,22 +1,19 @@
-import View from "../../motion/View";
-import history from "../../redux/store/history";
+import View from '../../motion/View'
+import history from '../../redux/store/history'
 
 type LogoProps = {
-  className?: string;
-};
+    className?: string
+}
 
 const Logo = ({ className }: LogoProps) => {
-  return (
-    <View
-      className={` cursor-pointer ${className}`}
-      onClick={() => history.push("/")}
-    >
-      <img
-        src="https://nevflynn.com/_next/image?url=%2Fimages%2Flogo.svg&w=96&q=75"
-        alt="Nev"
-      />
-    </View>
-  );
-};
+    return (
+        <View className={` cursor-pointer ${className}`} onClick={() => history.push('/')}>
+            <img
+                src='https://uploads-ssl.webflow.com/6036be4d49d4d03cd028a976/609a398dad5fb298a54f6d2b_iorama_black.svg'
+                alt='Nev'
+            />
+        </View>
+    )
+}
 
-export default Logo;
+export default Logo

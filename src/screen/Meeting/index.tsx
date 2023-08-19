@@ -13,7 +13,7 @@ const Meeting = () => {
 
     return (
         <Section>
-            <View className='p-2 flex flex-col gap-4  lg:w-[60%] m-auto'>
+            <View className='p-2 flex flex-col gap-4 w-full'>
                 <View>
                     <Back />
                 </View>

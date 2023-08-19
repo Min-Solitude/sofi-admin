@@ -30,7 +30,7 @@ const Auth = () => {
             <View className='w-full p-8 lg:p-24 flex md:w-[60%] lg:max-w-[40rem] lg:flex-1  flex-col min-h-screen  relative justify-center items-start'>
                 <Logo className='w-[3.5rem] absolute top-8 left-8 md:top-24 lg:left-24' />
                 <h1 className='mb-8 text-gradient font-medium  tracking-wider text-[1.8rem]'>
-                    {isAccount ? 'Login' : 'Register'}
+                    {isAccount ? 'Đăng nhập' : 'Đăng ký'}
                 </h1>
                 <View className='w-full'>{isAccount ? <Login /> : <Register />}</View>
                 <View className='mt-8 flex gap-2 items-center text-[0.9rem] text-gray-600'>
@@ -49,7 +49,7 @@ const Auth = () => {
                     <span className='text-[0.8rem] text-gray-400'>© 2023 by Nevsolit</span>
                 </View>
             </View>
-            <View className='hidden lg:block lg:flex-1 h-screen overflow-hidden relative bg-pink-200'>
+            <View className='hidden lg:block lg:flex-1 h-screen overflow-hidden relative '>
                 <img
                     src='https://papers.co/wallpaper/papers.co-bj42-apple-iphone-ios13-background-orange-art-36-3840x2400-4k-wallpaper.jpg'
                     alt='nev'
