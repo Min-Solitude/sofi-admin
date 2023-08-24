@@ -16,11 +16,13 @@ import storage from 'redux-persist/lib/storage'
 import history from './history'
 import { AuthReducer } from '../reducers/auth/auth.reducer'
 import { PostReducer } from '../reducers/post/post.reducer'
+import { ScreenReducer } from '../reducers/screen/screen.reducer'
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
     auth: AuthReducer,
-    post: PostReducer
+    post: PostReducer,
+    screen: ScreenReducer
 })
 
 type RootState = ReturnType<typeof rootReducer>

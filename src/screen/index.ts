@@ -14,16 +14,6 @@ const routes: Route[] = [
         layout: MainLayout
     },
     {
-        path: '/meeting',
-        component: React.lazy(() => import('./Meeting')),
-        layout: MainLayout
-    },
-    {
-        path: '/meeting/room/:idRoom',
-        component: React.lazy(() => import('./Meeting/components/Room')),
-        layout: MainLayout
-    },
-    {
         path: '/auth',
         component: React.lazy(() => import('./Auth')),
         layout: null

@@ -8,6 +8,7 @@ type accountState = {
     email: string
     photoURL: string
     displayName: string
+    member: boolean
 }
 
 export type AuthPayload = {

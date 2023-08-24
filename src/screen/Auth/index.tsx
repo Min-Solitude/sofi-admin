@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import Button from '../../components/Button'
-import Logo from '../../components/Logo'
-import { useAppSelector } from '../../hooks/useRedux'
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux'
 import View from '../../motion/View'
 import history from '../../redux/store/history'
 import Login from './Login'
+import IonIcon from '@reacticons/ionicons'
+import { authLoginWithGoogle } from '../../redux/reducers/auth'
 import Register from './Register'
-import { motion } from 'framer-motion'
+import Button from '../../components/Button'
 
 const Auth = () => {
-    const [isAccount, setIsAccount] = useState<boolean>(true)
-
     const checkAccessToken = useAppSelector((state) => state.auth.accessToken)
+    const [isLogin, setIsLogin] = useState<boolean | null>(true)
+    const [isShowFormLogin, setIsShowFormLogin] = useState<boolean>(false)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (checkAccessToken) {
@@ -20,59 +20,77 @@ const Auth = () => {
         }
     }, [checkAccessToken])
 
+    const handleLoginGoogle = () => {
+        dispatch(authLoginWithGoogle())
+    }
+
     return (
-        <View
-            className=' font-medium flex justify-center items-center '
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-        >
-            <View className='w-full p-8 lg:p-24 flex md:w-[60%] lg:max-w-[40rem] lg:flex-1  flex-col min-h-screen  relative justify-center items-start'>
-                <Logo className='w-[3.5rem] absolute top-8 left-8 md:top-24 lg:left-24' />
-                <h1 className='mb-8 text-gradient font-medium  tracking-wider text-[1.8rem]'>
-                    {isAccount ? 'Đăng nhập' : 'Đăng ký'}
-                </h1>
-                <View className='w-full'>{isAccount ? <Login /> : <Register />}</View>
-                <View className='mt-8 flex gap-2 items-center text-[0.9rem] text-gray-600'>
-                    {isAccount ? 'Chưa có tài khoản?' : 'Đã có tài khoản?'}
-                    <Button
-                        onClick={() => {
-                            setIsAccount(!isAccount)
-                            toast.dismiss()
-                        }}
-                    >
-                        <p className='text-primary'>{isAccount ? 'Đăng ký ngay' : 'Đăng nhập ngay'}</p>
-                    </Button>
+        <View className=' bg-black text-white font-medium min-h-screen flex justify-center items-center '>
+            <View className='flex flex-col lg:flex-row  justify-center items-center gap-8 w-full'>
+                {isShowFormLogin ? (
+                    <View className=' flex-1 flex w-full flex-col items-center gap-8'>
+                        <Button
+                            className='w-[3.5rem] h-[3.5rem] rounded-full flex justify-center items-center bg-gray-900 border border-gray-800'
+                            type='button'
+                            onClick={() => setIsShowFormLogin(false)}
+                            initial={{ opacity: 0, y: -500 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <IonIcon name='close-outline' className='text-gray-500 text-[1.6rem]' />
+                        </Button>
+                        {isLogin ? <Login /> : <Register />}
+                        <Button onClick={() => setIsLogin(!isLogin)}>
+                            <span className='text-[0.9rem] font-light underline text-gray-600'>
+                                {isLogin ? 'Đăng ký' : 'Đăng nhập'}
+                            </span>
+                        </Button>
+                    </View>
+                ) : null}
+                <View
+                    className={
+                        isShowFormLogin ? 'flex gap-6 items-center flex-1 justify-center' : 'flex gap-6 items-center '
+                    }
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    <View className='group flex flex-col items-center gap-2 cursor-pointer'>
+                        <span className='opacity-0 group-hover:opacity-[1] duration-200 text-gray-600 text-[0.8rem] -translate-y-4 group-hover:-translate-y-2'>
+                            Nev
+                        </span>
+                        <button
+                            className='w-[3.5rem] h-[3.5rem] rounded-2xl border border-gray-800 group-hover:-translate-y-2 duration-200 flex justify-center items-center gap-2 bg-gray-900 shadow-md '
+                            onClick={() => history.push('https://www.nevsolit.website/')}
+                        >
+                            <span className='text-[1.4rem] text-gray-300 duration-200 '>N</span>
+                        </button>
+                    </View>
+
+                    <View className='group flex flex-col items-center gap-2 cursor-pointer'>
+                        <span className='opacity-0 group-hover:opacity-[1] duration-200 text-gray-600 text-[0.8rem] -translate-y-4 group-hover:-translate-y-2'>
+                            Google
+                        </span>
+                        <button
+                            className='w-[3.5rem] h-[3.5rem] rounded-2xl border border-gray-800 group-hover:-translate-y-2 duration-200 flex justify-center items-center gap-2 bg-gray-900 shadow-md '
+                            onClick={handleLoginGoogle}
+                        >
+                            <IonIcon name='logo-google' className='text-[1.4rem] text-gray-300 duration-200 ' />
+                        </button>
+                    </View>
+
+                    <View className='group flex flex-col items-center gap-2 cursor-pointer'>
+                        <span className='opacity-0 group-hover:opacity-[1] duration-200 text-gray-600 text-[0.8rem] -translate-y-4 group-hover:-translate-y-2'>
+                            Login
+                        </span>
+                        <button
+                            className='w-[3.5rem] h-[3.5rem] rounded-2xl border border-gray-800 group-hover:-translate-y-2 duration-200 flex justify-center items-center gap-2 bg-gray-900 shadow-md '
+                            onClick={() => setIsShowFormLogin(true)}
+                        >
+                            <IonIcon name='person' className='text-[1.4rem] text-gray-300 duration-200 ' />
+                        </button>
+                    </View>
                 </View>
-                <View className='absolute bottom-8 md:bottom-20 left-[50%] -translate-x-[50%] flex flex-col gap-4 items-center'>
-                    <Logo className='w-[3rem]' />
-                    <span className='text-[0.8rem] text-gray-400'>© 2023 by Nevsolit</span>
-                </View>
-            </View>
-            <View className='hidden lg:block lg:flex-1 h-screen overflow-hidden relative '>
-                <img
-                    src='https://papers.co/wallpaper/papers.co-bj42-apple-iphone-ios13-background-orange-art-36-3840x2400-4k-wallpaper.jpg'
-                    alt='nev'
-                    className='absolute h-full object-cover'
-                />
-                <motion.img
-                    src='https://cdn.gamma.app/zc87vhr30n8uf3n/98e24af9f2294c14b215d5e51963947d/original/just-the-boat.svg'
-                    alt='nev'
-                    className='w-[16rem] absolute bottom-8 left-8'
-                    initial={{ rotate: 0, y: 0 }}
-                    animate={{ rotate: 5, y: 10 }}
-                    transition={{
-                        repeat: Infinity,
-                        duration: 2,
-                        repeatType: 'reverse',
-                        ease: 'easeInOut'
-                    }}
-                />
-                <img
-                    src='https://cdn.gamma.app/zc87vhr30n8uf3n/fb59abe02a28477d8092f0e4d817bd78/original/just-the-waves.svg'
-                    alt='nev'
-                    className='w-[16rem] absolute bottom-8 translate-y-[80%] left-6'
-                />
             </View>
         </View>
     )
