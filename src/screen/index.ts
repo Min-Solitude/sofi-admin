@@ -5,6 +5,11 @@ import { Route } from '../configs'
 const routes: Route[] = [
     {
         path: '/',
+        component: React.lazy(() => import('./Lofi')),
+        layout: MainLayout
+    },
+    {
+        path: '/forum',
         component: React.lazy(() => import('./Home')),
         layout: MainLayout
     },

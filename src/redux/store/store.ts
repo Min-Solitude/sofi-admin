@@ -17,12 +17,14 @@ import history from './history'
 import { AuthReducer } from '../reducers/auth/auth.reducer'
 import { PostReducer } from '../reducers/post/post.reducer'
 import { ScreenReducer } from '../reducers/screen/screen.reducer'
+import { MusicReducer } from '../reducers/music/music.reducer'
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
     auth: AuthReducer,
     post: PostReducer,
-    screen: ScreenReducer
+    screen: ScreenReducer,
+    music: MusicReducer
 })
 
 type RootState = ReturnType<typeof rootReducer>

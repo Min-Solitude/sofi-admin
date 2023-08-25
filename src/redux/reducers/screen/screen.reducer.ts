@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ScreenState } from './screen.type'
 
 const initialState: ScreenState = {
-    background: true
+    background: true,
+    chooseBackground: 1
 }
 
 export const changeBackground = createAsyncThunk(
@@ -11,6 +12,10 @@ export const changeBackground = createAsyncThunk(
     }
 )
 
+export const chooseBackground = createAsyncThunk(
+    'screen/chooseBackground', (payload: number) => {
+        return payload
+    })
 
 const reducer = createSlice({
     name: 'screen',
@@ -18,8 +23,10 @@ const reducer = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(changeBackground.fulfilled, (state, action) => {
-            state.background = action.payload
-            
+            state.background = action.payload   
+        })
+        builder.addCase(chooseBackground.fulfilled, (state, action) => {
+            state.chooseBackground = action.payload
         })
     }
 })

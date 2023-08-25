@@ -22,14 +22,38 @@ body {
   height: 0px;
 }
 
-.background-day {
+.background-day-0 {
   background-image: url(https://cdna.artstation.com/p/assets/images/images/012/252/242/4k/f-a-herold-summervillage-day.jpg?1533827344);
   background-size: cover;
   background-position: center;
 }
 
-.background-night {
+.background-day-1 {
+  background-image: url(https://cdnb.artstation.com/p/assets/images/images/022/937/573/large/anastasiia-kriukova-day-final-srgb.jpg?1577374315);
+  background-size: cover;
+  background-position: center;
+}
+
+.background-day-2 {
+  background-image: url(https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810);
+  background-size: cover;
+  background-position: center;
+}
+
+.background-night-0 {
   background-image: url(https://cdnb.artstation.com/p/assets/images/images/012/252/245/4k/f-a-herold-summervillage-night.jpg?1533827363);
+  background-size: cover;
+  background-position: center;
+}
+
+.background-night-1 {
+  background-image: url(https://cdna.artstation.com/p/assets/images/images/022/937/578/large/anastasiia-kriukova-night-final-srgb.jpg?1577374060);
+  background-size: cover;
+  background-position: center;
+}
+
+.background-night-2 {
+  background-image: url(https://cdna.artstation.com/p/assets/images/images/022/272/150/4k/naka-isurita-environment-sketching-7-night.jpg?1574784816);
   background-size: cover;
   background-position: center;
 }
