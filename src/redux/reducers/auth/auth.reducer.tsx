@@ -73,6 +73,21 @@ export const authUpdatePhotoURL = createAsyncThunk('auth/authUpdatePhotoURL', as
     }
 })
 
+// REGISTER MEMBER
+export const authRegisterMember = createAsyncThunk('auth/authRegisterMember', async (payload: string) => {
+    console.log(payload);
+
+    const user = auth.currentUser
+
+    if (user) {
+        await setDoc(doc(db, 'users', user.uid), {
+            member: true
+        }, { merge: true })
+    }
+
+    return payload
+})
+
 
 
 
@@ -155,6 +170,15 @@ const reducer = createSlice({
         })
         builder.addCase(authUpdatePhotoURL.fulfilled, (state, action: any) => {
             state.account.photoURL = action.payload
+            toast.success('Cập nhật thành công')
+        })
+
+        // REGISTER MEMBER
+        builder.addCase(authRegisterMember.rejected, () => {
+            toast.error('Cập nhật thất bại')
+        })
+        builder.addCase(authRegisterMember.fulfilled, (state, action: any) => {
+            state.account.member = true
             toast.success('Cập nhật thành công')
         })
     }

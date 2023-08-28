@@ -73,11 +73,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             history.push('/auth')
         }
 
+        // REMOVE POSTED IN LOCALSTORAGE AFTER 5 MINUTES
+
         const checkPosted = localStorage.getItem('Posted')
         if (checkPosted) {
             setTimeout(() => {
                 localStorage.removeItem('Posted')
-            }, 86400000)
+            }, 300000)
         }
     }, [])
 
@@ -107,15 +109,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
     return (
         <View className={
-            `h-screen  flex items-end  bg-[#f0f0f0]  text-black ${background ? isBackgroundDay : isBackgroundNight}`
+            `h-screen  flex items-end  bg-[#f0f0f0] duration-500 text-black ${background ? isBackgroundDay : isBackgroundNight}`
         }>
             {checkMobile ? <Navigation /> : <SideBar />}
             <Header />
-            <main className='lg:m-auto h-[93.5vh] relative overflow-y-scroll  lg:w-[80%]  xl:w-[60%] w-full  font-medium'>
+            <main className='lg:m-auto h-[89.5vh] relative overflow-y-scroll  lg:w-[80%]  xl:w-[60%] w-full  font-medium'>
                 {children}
-                <View className='absolute flex items-center gap-2 bg-[#00000080] py-2 px-4 rounded-lg text-white bottom-32 left-1/2 translate-x-[-50%]'>
-                    <IonIcon name='disc' className='text-2xl' />
-                    <i>{dataMusic[isMusic].name}</i>
+                <View className='fixed bottom-16 flex items-center gap-2 lg:bottom-4 lg:right-4 z-50 bg-[#000000] py-2 px-4 rounded-lg text-white '>
+                    <IonIcon name='disc' className='text-2xl cursor-pointer hover:' />
+                    <i className='hidden lg:block'>{dataMusic[isMusic].name}</i>
                     <audio src={dataMusic[isMusic].url} ref={audioRef} >
                         <source src={dataMusic[isMusic].url} type="audio/mpeg" />
                     </audio>

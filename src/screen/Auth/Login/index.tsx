@@ -53,7 +53,7 @@ const Login = () => {
                 onSubmit={handleLogin}
                 initial={{ opacity: 0, y: 500 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.5 }}
             >
                 <View className='flex flex-col gap-2'>
                     <label htmlFor='email' className='text-gray-500 text-[0.9rem]'>
@@ -102,7 +102,7 @@ const Login = () => {
                         <p className='text-[0.9rem] underline text-gray-500'>Quên mật khẩu</p>
                     </Button>
                 </View>
-                <Button className='mt-4  background-gradient text-white font-medium py-2 rounded-lg'>Đăng nhập</Button>
+                <Button className='mt-4  bg-[#ffffff50] text-[0.9rem] text-white font-medium py-2 rounded-lg'>Đăng nhập</Button>
             </motion.form>
         </View>
     )

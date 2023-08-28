@@ -6,7 +6,8 @@ import Button from '../../../../components/Button'
 import Logo from '../../../../components/Logo'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/useRedux'
 import View from '../../../../motion/View'
-import { AuthAction, authUpdateDisplayName, authUpdatePhotoURL } from '../../../../redux/reducers/auth'
+import { AuthAction, authRegisterMember, authUpdateDisplayName, authUpdatePhotoURL } from '../../../../redux/reducers/auth'
+import { Link } from 'react-router-dom'
 
 const Account = () => {
     const [isDropdown, setIsDropdown] = useState(false)
@@ -22,6 +23,7 @@ const Account = () => {
     const accountLogin = useAppSelector((state) => state.auth.account)
 
     const [isDisplayName, setIsDisplayName] = useState(accountLogin.displayName)
+
     const [isImageUrl, setIsImageUrl] = useState<any>(null)
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,7 +40,7 @@ const Account = () => {
     }, [])
 
     const handleRegisterMember = async () => {
-        toast.info('Đang đăng ký thành viên...')
+        dispatch(authRegisterMember(accountLogin.uid))
     }
 
     const handleIUpdateDisplayName = async () => {
@@ -191,7 +193,9 @@ const Account = () => {
                                                     </Button>
                                                 </View>
                                                 <View className='w-full  px-4 rounded-lg py-2 bg-[#1a1919]'>
-                                                    <input type="text" value={isDisplayName ? isDisplayName : 'Anonymous'} onChange={e => setIsDisplayName(e.target.value)}
+                                                    <input type="text" value={isDisplayName}
+                                                        placeholder='Anonymous'
+                                                        onChange={e => setIsDisplayName(e.target.value)}
                                                         className='w-full outline-none bg-transparent'
                                                     />
                                                 </View>
@@ -250,8 +254,12 @@ const Account = () => {
                                                 <View>
                                                     {
                                                         accountLogin.member ? (
-                                                            <View className='flex'>
-
+                                                            <View className='flex flex-col gap-2'>
+                                                                <p className='font-medium text-green-400 text-[0.9rem]'>Bạn đã là thành viên của Nefy</p>
+                                                                <Link className='flex items-center gap-2' to='https://www.facebook.com/nefystudies/'>
+                                                                    <IonIcon name='logo-facebook' className='text-[1.6rem] text-blue-400' />
+                                                                    <p>Tham gia group facebook để cùng nhau phát triển!</p>
+                                                                </Link>
                                                             </View>
                                                         ) : (
                                                             <Button className='py-2 px-4 rounded-lg bg-[#141414] font-medium'
@@ -288,11 +296,11 @@ const Account = () => {
                             <h1 className='text-[0.9rem] font-bold text-yellow-400'>Thay đổi mật khẩu</h1>
                             <View className='flex flex-col gap-2 w-full'>
                                 <label htmlFor="oldPassword" className='text-[0.8rem] text-[#6b6a6a] font-medium'>Mật khẩu cũ</label>
-                                <input type="text" id='oldPassword' className='w-full outline-none bg-transparent bg-[#1d1d1d] w-full px-4 py-2 font-medium rounded-lg text-[0.9rem]' />
+                                <input type="text" id='oldPassword' className='w-full outline-none bg-transparent bg-[#383838] w-full px-4 py-2 font-medium rounded-lg text-[0.9rem]' />
                             </View>
                             <View className='flex flex-col gap-2 w-full'>
                                 <label htmlFor="newPassword" className='text-[0.8rem] text-[#6b6a6a] font-medium'>Mật khẩu mới</label>
-                                <input type="text" id='newPassword' className='w-full outline-none bg-transparent bg-[#1d1d1d] w-full px-4 py-2 font-medium rounded-lg text-[0.9rem]' />
+                                <input type="text" id='newPassword' className='w-full outline-none bg-transparent bg-[#383838] w-full px-4 py-2 font-medium rounded-lg text-[0.9rem]' />
                             </View>
                             <Button className='w-full py-2 rounded-lg text-[0.9rem] font-medium border border-yellow-400 text-yellow-400 mt-4 mb-4'
                                 onClick={() => {

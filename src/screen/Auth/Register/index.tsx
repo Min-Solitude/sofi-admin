@@ -56,7 +56,7 @@ const Register = () => {
             <motion.form
                 initial={{ opacity: 0, y: 500 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.5 }}
                 className=' flex flex-col gap-4 w-full max-w-[25rem]  bg-gray-800 p-8 rounded-2xl shadow-2xl'
                 onSubmit={handleRegister}
             >
@@ -128,9 +128,9 @@ const Register = () => {
                     </View>
                 </View>
 
-                <Button className=' mt-4 background-gradient text-white font-medium py-2 rounded-lg'>Đăng ký</Button>
+                <Button className='mt-4  bg-[#ffffff50] text-[0.9rem] text-white font-medium py-2 rounded-lg'>Đăng ký</Button>
             </motion.form>
-        </View>
+        </View >
     )
 }
 

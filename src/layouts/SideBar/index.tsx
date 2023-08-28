@@ -17,24 +17,14 @@ const SideBar = () => {
                     <IonIcon name='home-outline' className='text-xl text-[#d6d4d4] ' />
                 </NavLink>
                 <NavLink
-                    to='/meeting'
+                    to='/forum'
                     className={(nav) =>
                         nav.isActive
                             ? 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#ffffff70]'
                             : 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#00000070]'
                     }
                 >
-                    <IonIcon name='videocam-outline' className='text-xl text-[#d6d4d4] ' />
-                </NavLink>
-                <NavLink
-                    to='/c'
-                    className={(nav) =>
-                        nav.isActive
-                            ? 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#ffffff70]'
-                            : 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#00000070]'
-                    }
-                >
-                    <IonIcon name='home-outline' className='text-xl text-[#d6d4d4]' />
+                    <IonIcon name='chatbox-ellipses-outline' className='text-xl text-[#d6d4d4]' />
                 </NavLink>
                 <NavLink
                     to='/about'
@@ -44,17 +34,17 @@ const SideBar = () => {
                             : 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#00000070]'
                     }
                 >
-                    <IonIcon name='home-outline' className='text-xl text-[#d6d4d4]' />
+                    <IonIcon name='information-circle-outline' className='text-xl text-[#d6d4d4]' />
                 </NavLink>
                 <NavLink
-                    to='/c'
+                    to='https://www.nevsolit.website/'
                     className={(nav) =>
                         nav.isActive
                             ? 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#ffffff70]'
                             : 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#00000070]'
                     }
                 >
-                    <IonIcon name='home-outline' className='text-xl text-[#d6d4d4]' />
+                    <span className="text-white">N</span>
                 </NavLink>
             </View>
         </View>

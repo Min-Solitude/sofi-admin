@@ -19,7 +19,6 @@ const spring = {
 
 const Header = () => {
     const dispatch = useAppDispatch()
-    const [isOn, setIsOn] = useState(true);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [isShowBanner, setIsShowBanner] = useState(false);
     const background = useAppSelector(state => state.screen.chooseBackground)
@@ -27,6 +26,7 @@ const Header = () => {
     const [isStartMusic, setIsStartMusic] = useState(false)
 
     const startMusicStart = useAppSelector(state => state.music.status)
+    const isBackground = useAppSelector(state => state.screen.background)
 
 
     const isMusic = useAppSelector(state => state.music.music)
@@ -35,8 +35,7 @@ const Header = () => {
 
 
     const toggleSwitch = () => {
-        setIsOn(!isOn)
-        dispatch(changeBackground(!isOn))
+        dispatch(changeBackground(!isBackground))
     };
 
     const handleZoomFullScreen = () => {
@@ -94,8 +93,8 @@ const Header = () => {
 
 
     return (
-        <header className={`fixed left-0   flex top-0 items-center lg:justify-between justify-center   w-full p-2 z-[100]  `}>
-            <Logo className='text-[1.5rem] hidden lg:block' />
+        <header className={`fixed left-0  bg-[#0000006d] lg:bg-transparent  flex flex-col lg:flex-row gap-2 lg:gap-0 top-0 items-center lg:justify-between   w-full p-2 z-[100]  `}>
+            <Logo className='text-[1.5rem] ' />
 
             <View className='flex gap-4 duration-200 items-center '>
                 <View className="flex gap-2 items-center py-2 px-4 rounded-lg bg-[#0000006d]">
@@ -124,7 +123,7 @@ const Header = () => {
                 <View className="py-1 px-4 hidden lg:block cursor-pointer rounded-lg bg-[#0000006d]">
                     <p className='text-white  font-OpenSans font-bold'>{isTimeClock}</p>
                 </View>
-                <div className={`switch ${isOn ? 'bg-[#0000006d]' : 'bg-[#ffffff64]'}`} data-ison={isOn} onClick={toggleSwitch}>
+                <div className={`switch ${isBackground ? 'bg-[#0000006d]' : 'bg-[#ffffff64]'}`} data-ison={isBackground} onClick={toggleSwitch}>
                     <motion.div className="handle" layout transition={spring} />
                 </div>
                 <Button className="bg-[#0000006d] flex justify-center items-center p-2 rounded-lg text-white"
@@ -133,7 +132,7 @@ const Header = () => {
                     <IonIcon name="image-outline" className="text-[1.5rem] " />
                 </Button>
                 <Button className={
-                    `bg-[#0000006d] flex justify-center items-center p-2 rounded-lg text-white ${isFullScreen ? 'border border-yellow-400' : ''}`
+                    `bg-[#0000006d] hidden lg:flex justify-center items-center p-2 rounded-lg text-white ${isFullScreen ? 'border border-yellow-400' : ''}`
                 }
                     onClick={() => handleZoomFullScreen()}
                 >
@@ -145,7 +144,7 @@ const Header = () => {
 
             {
                 isShowBanner && (
-                    <View className=" right-0 top-16 fixed bg-[#000000] text-white shadow-md rounded-lg w-[90%] max-w-[30rem] flex flex-col gap-2 p-4"
+                    <View className=" right-0 lg:top-16 fixed top-32 bg-[#000000] text-white shadow-md rounded-lg w-[90%] max-w-[30rem] flex flex-col gap-2 p-4"
                         initial={{ x: 200 }}
                         animate={{ x: 0 }}
                         exit={{ x: 200 }}
@@ -159,7 +158,10 @@ const Header = () => {
                             ].map((item, index) => (
                                 <View key={index} className={`w-full border cursor-pointer rounded-lg border-2 flex justify-center items-center hover:brightness-50 duration-200 ${background === index ? 'border-yellow-400' : 'border-transparent'
                                     }`}
-                                    onClick={() => handleChooseBackground(index)}
+                                    onClick={() => {
+                                        handleChooseBackground(index)
+                                        setIsShowBanner(false)
+                                    }}
                                 >
                                     <img src={item} alt="nev"
                                         className=" h-full w-full object-cover rounded-lg"

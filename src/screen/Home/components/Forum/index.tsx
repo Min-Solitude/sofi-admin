@@ -54,7 +54,7 @@ const Forum = () => {
 
     return (
         <View className='w-full max-w-[30rem]'>
-            {accessToken && !checkPosted && (
+            {accessToken && !checkPosted ? (
                 <View className='p-2 mb-8 mt-4 rounded-lg shadow-md border bg-[#201f1fae] border-gray-800 gap-4   text-[0.9rem] flex items-center'
                     onClick={() => setIsShowDropzone(true)}
 
@@ -75,6 +75,10 @@ const Forum = () => {
                     >
                         <p>Tạo bài viết</p>
                     </View>
+                </View>
+            ) : (
+                <View className='mb-4 text-[0.9rem] py-2 px-4 rounded-lg bg-[#00000090] text-white'>
+                    <p>Vui lòng chờ 5 phút để được đăng bài</p>
                 </View>
             )}
             {isShowDropzone && <Dropzone closeDropzone={() => setIsShowDropzone(false)} />}

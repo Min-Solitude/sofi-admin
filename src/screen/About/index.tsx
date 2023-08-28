@@ -1,93 +1,73 @@
-import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 import View from '../../motion/View';
-import { useEffect, useRef, useState } from 'react';
-import Button from '../../components/Button';
 
-import RiveFile from '../../riv/diamon.riv'
-import Section from '../../motion/Section';
+import Logo from '../../components/Logo';
+import Button from '../../components/Button';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 
 
 export default function About() {
-
-    const [isContent, setIsContent] = useState('')
-
-    const { rive, RiveComponent } = useRive({
-        src: RiveFile,
-        autoplay: true,
-        stateMachines: "State Machine",
-    })
-
-    // StateMachineInputType.Boolean
-    const isRuby = useStateMachineInput(rive, "State Machine", "Ruby")
-    const isGarnet = useStateMachineInput(rive, "State Machine", "Garnet")
-    const isSapphire = useStateMachineInput(rive, "State Machine", "Sapphire")
-
-    useEffect(() => {
-        setIsContent('garnet')
-    }, [])
+    const [isChoose, setIsChoose] = useState(0);
 
     return (
-        <Section>
-            <View className=' flex flex-col gap-8 rounded-2xl h-[80vh] text-white  p-2 '>
-                <View className='w-full flex justify-center items-center'>
-                    <View className='w-[10rem] h-[10rem] overflow-hidden rounded-full border-2 border-white flex justify-center items-center'>
-                        <RiveComponent width={'100%'} height={'100%'} />
-                    </View>
+        <View className='bg-[#151515] text-white flex-col lg:flex-row flex gap-4 m-2 h-[92%] p-4 rounded-xl'>
+            <View className='lg:flex-1 flex flex-col gap-4 items-start max-w-[18rem]'>
+                <Logo className='text-[1.2rem]' />
+                <View className='flex flex-wrap w-full gap-4 text-[0.8rem] lg:flex-col'>
+                    <Button className={`py-2 rounded-lg lg:justify-start   ${isChoose === 0 && 'bg-[#ffffff50] lg:px-6'} px-2 duration-200 flex justify-center items-center`}
+                        onClick={() => setIsChoose(0)}
+                    >
+                        Tổng quan
+                    </Button>
+                    <Button className={`py-2 rounded-lg lg:justify-start   ${isChoose === 1 && 'bg-[#ffffff50] lg:px-6 '} px-2  duration-200 flex justify-center items-center`}
+                        onClick={() => setIsChoose(1)}
+                    >
+                        Nền tảng
+                    </Button>
+                    <Button className={`py-2 rounded-lg lg:justify-start  ${isChoose === 2 && 'bg-[#ffffff50] lg:px-6'} px-2  duration-200 flex justify-center items-center`}
+                        onClick={() => setIsChoose(2)}
+                    >
+                        Liên hệ
+                    </Button>
                 </View>
-                <View className=' flex flex-col gap-2'>
-                    <View className='bg-[#00000070]  p-4 flex text-[0.9rem] flex-col items-center rounded-xl'>
-                        <h1 className='text-[2rem] my-4 font-bold text-yellow-400'>
-                            {
-                                isContent === 'ruby' ? ' Hỗ trợ' : isContent === 'garnet' ? 'Giới thiệu' : 'Liên hệ'
-                            }
-                        </h1>
-                        <p className='text-center'>
-                            {
-                                isContent === 'ruby' ? '1' :
-                                    isContent === 'garnet' ? 'Là sinh viên, chúng tôi hiểu việc chỉ ngồi vào bàn học và tập trung khó khăn như thế nào. Đặc biệt là khi bạn phải đặt nhạc, hẹn giờ và ghi chú từ ba thiết bị hoặc trang web khác nhau, trong khi bị tấn công bởi quảng cáo, có thể là của một công cụ năng suất khác. Chúng tôi đã tạo nefy như một cách giúp bạn khắc phục điều này và cuối cùng là có một không gian kỹ thuật số cá nhân, yên tĩnh để làm việc, học tập hoặc chỉ đơn giản là thư giãn. Với các diễn đàn bài viết và không gian học tập thoải mái sẽ giúp bạn có cảm giác tuyệt vời hơn trong việc học'
-                                        : 'Hãy liên hệ cho chúng tôi thông qua Email, số điện thoại để có thể phản hồi những sự cố hoặc những hoạt động từ Nefy. Xin chân thành cảm ơn!'
-                            }
-                        </p>
-                        <p className='mt-4 text-center'>Chúng tôi không ngừng cải thiện, hãy đảm bảo theo dõi mạng xã hội của chúng tôi để được cập nhật!</p>
-                        <View className='flex w-full flex-col gap-8 items-center mt-8'>
-                            <Button onClick={() => {
-                                isRuby!.value = true
-                                isGarnet!.value = false
-                                isSapphire!.value = false
-                                setIsContent('ruby')
-                            }} className='bg-red-500 py-3 rounded-lg justify-center text-white flex gap-2 items-center w-full'>
-                                <IonIcon name='diamond' />
-                                <span>
-                                    Ruby
-                                </span>
-                            </Button>
-                            <Button onClick={() => {
-                                isGarnet!.value = true
-                                isRuby!.value = false
-                                isSapphire!.value = false
-                                setIsContent('garnet')
-                            }} className='bg-purple-500 py-3 rounded-lg justify-center text-white flex gap-2 items-center w-full'>
-                                <IonIcon name='diamond' />
-                                <span>
-                                    Garnet
-                                </span>
-                            </Button>
-                            <Button onClick={() => {
-                                isSapphire!.value = true
-                                isRuby!.value = false
-                                isGarnet!.value = false
-                                setIsContent('sapphire')
-                            }} className='bg-blue-500 py-3 rounded-lg justify-center text-white flex gap-2 items-center w-full'>
-                                <IonIcon name='diamond' />
-                                <span>
-                                    Sapphire
-                                </span>
-                            </Button>
+            </View>
+            <View className='bg-[#ffffff30] text-[0.9rem] rounded-xl p-4 flex-1'>
+                {
+                    isChoose === 0 && (
+                        <View className='flex flex-col gap-4 items-start'>
+                            <p className='text-start'>
+                                Hầu hết các bạn sinh viên sẽ rất đam mê với học trên nền nhạc lofi. Vì thế Nefy sẽ đem lại cho bạn một không gian học tập thoải mái, không quảng cáo để đảm bảo bạn có một cảm giác học thoải mái. Chúng tôi vẫn đang tiếp tục phát triển để có đem lại cho bạn những sự trải nghiệm tốt nhất. Bạn có thể đăng ký trở thành thành viên của nefy để có thể cùng nhau phát triển cộng đồng hoặc theo dõi fanpage để nhận những thông báo hoặc sự kiện mới nhất.
+                            </p>
+                            <p className='text-start'>Nefy là một nhánh dịch vụ website giải trí của Nevsolit. Bạn có thể đến với Nevsolit để tìm kiếm những dịch vụ khác. <br /> <a href="https://www.nevsolit.website/" className='text-green-400'>Nevsolit</a></p>
                         </View>
-                    </View>
-                </View>
-            </View >
-        </Section>
+                    )
+                }
+                {
+                    isChoose === 1 && (
+                        <View className='flex gap-4'>
+                            <Link to='https://www.facebook.com/nefystudies/' className='p-2 rounded-lg bg-blue-500 flex justify-center items-center'>
+                                <IonIcon name='logo-facebook' className='text-3xl' />
+                            </Link>
+                            <Link to='https://www.instagram.com/ktys4tt/' className='p-2 rounded-lg bg-pink-500 flex justify-center items-center'>
+                                <IonIcon name='logo-instagram' className='text-3xl' />
+                            </Link>
+                            <Link to='https://www.youtube.com/channel/UC9Q6bqQX6qZ4X7Z9Z9Q9Z9Q' className='p-2 rounded-lg bg-red-500 flex justify-center items-center'>
+                                <IonIcon name='logo-youtube' className='text-3xl' />
+                            </Link>
+                        </View>
+                    )
+                }
+                {
+                    isChoose === 2 && (
+                        <View>
+                            <p className='text-start'>Nếu bạn có bất kì thắc mắc nào về nefy, hãy liên hệ với chúng tôi qua email: <a href="mailto:nevsolit@gmail.com" className='text-green-400'>
+                                nevsolit@gmail.com
+                            </a></p>
+                        </View>
+                    )
+                }
+            </View>
+        </View>
     );
 }
