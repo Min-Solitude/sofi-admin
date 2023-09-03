@@ -15,6 +15,10 @@ body {
   background-color: #f0f0f0;
 }
 
+.cursor-pointer-welcome {
+  cursor: url('assets/img/icons8-3d-pointer-48.png'), auto;
+}
+
 /* SCROLL  */
 
 ::-webkit-scrollbar {

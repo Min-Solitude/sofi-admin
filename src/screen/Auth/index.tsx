@@ -7,21 +7,27 @@ import IonIcon from '@reacticons/ionicons'
 import { authLoginWithGoogle } from '../../redux/reducers/auth'
 import Register from './Register'
 import Button from '../../components/Button'
+import Welcome from '../../components/shared/Welcome'
 
 const Auth = () => {
     const checkAccessToken = useAppSelector((state) => state.auth.accessToken)
     const [isLogin, setIsLogin] = useState<boolean | null>(true)
     const [isShowFormLogin, setIsShowFormLogin] = useState<boolean>(false)
+    const isWelcome = sessionStorage.getItem('isWelcome')
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (checkAccessToken) {
             history.push('/')
         }
-    }, [checkAccessToken])
+    }, [checkAccessToken, isWelcome])
 
     const handleLoginGoogle = () => {
         dispatch(authLoginWithGoogle())
+    }
+
+    if (!isWelcome) {
+        return <Welcome />
     }
 
     return (
