@@ -215,7 +215,10 @@ const Account = () => {
                                                 <View className='flex justify-between items-end'>
                                                     <label htmlFor="avatar" className='w-[3rem] h-[3rem] flex justify-center items-center  cursor-pointer rounded-lg overflow-hidden'>
                                                         <img src={
-                                                            accountLogin.photoURL ? accountLogin.photoURL : 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'
+                                                            isImageUrl ? URL.createObjectURL(isImageUrl) :
+                                                                accountLogin.photoURL
+                                                                    ? accountLogin.photoURL
+                                                                    : 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'
                                                         } alt="nev"
                                                             className='w-full h-full object-cover'
                                                         />

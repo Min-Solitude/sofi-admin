@@ -144,9 +144,9 @@ const Header = () => {
 
             {
                 isShowBanner && (
-                    <View className=" right-0 lg:top-16 fixed top-32 bg-[#000000] text-white shadow-md rounded-lg w-[90%] max-w-[30rem] flex flex-col gap-2 p-4"
-                        initial={{ x: 200 }}
-                        animate={{ x: 0 }}
+                    <View className="bottom-28 cursor-pointer lg:w-[40rem] lg:left-2 lg:bottom-2 fixed z-50 flex gap-2 items-center p-2 bg-black w-full rounded-lg  left-0"
+                        initial={{ y: 200 }}
+                        animate={{ y: 0 }}
                         exit={{ x: 200 }}
                         transition={{ duration: 0.5 }}
                     >
@@ -156,7 +156,7 @@ const Header = () => {
                                 'https://cdnb.artstation.com/p/assets/images/images/022/937/573/large/anastasiia-kriukova-day-final-srgb.jpg?1577374315',
                                 'https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810',
                             ].map((item, index) => (
-                                <View key={index} className={`w-full border cursor-pointer rounded-lg border-2 flex justify-center items-center hover:brightness-50 duration-200 ${background === index ? 'border-yellow-400' : 'border-transparent'
+                                <View key={index} className={`overflow-hidden rounded-lg border duration-200 h-[5rem] lg:h-[8rem] flex-1 ${background === index ? 'border-yellow-400' : 'border-transparent'
                                     }`}
                                     onClick={() => {
                                         handleChooseBackground(index)
@@ -164,12 +164,11 @@ const Header = () => {
                                     }}
                                 >
                                     <img src={item} alt="nev"
-                                        className=" h-full w-full object-cover rounded-lg"
+                                        className=" h-full duration-200 hover:brightness-75 hover:scale-110 w-full object-cover rounded-lg"
                                     />
                                 </View>
                             ))
                         }
-
                     </View>
                 )
             }

@@ -15,7 +15,8 @@ const initialState: AuthState = {
         photoURL: '',
         email: '',
         member: false
-    }
+    },
+    loading: false,
 }
 
 // REGISTER
@@ -109,12 +110,16 @@ const reducer = createSlice({
     },
     extraReducers: (builder) => {
         // REGISTER
-        builder.addCase(authRegister.rejected, () => {
+        builder.addCase(authRegister.rejected, (state, action) => {
+            state.loading = false
             toast.error('Đăng ký thất bại')
         })
-        builder.addCase(authRegister.fulfilled, () => {
+        builder.addCase(authRegister.pending, (state, action) => {
+            state.loading = true
+        })
+        builder.addCase(authRegister.fulfilled, (state, action) => {
+            state.loading = false
             toast.success('Đăng ký thành công')
-
         })
 
         // LOGIN WITH ACCOUNT
@@ -167,6 +172,9 @@ const reducer = createSlice({
         // UPDATE PHOTO URL
         builder.addCase(authUpdatePhotoURL.rejected, () => {
             toast.error('Cập nhật thất bại')
+        })
+        builder.addCase(authUpdatePhotoURL.pending, () => {
+            toast.info('Đang cập nhật...')
         })
         builder.addCase(authUpdatePhotoURL.fulfilled, (state, action: any) => {
             state.account.photoURL = action.payload

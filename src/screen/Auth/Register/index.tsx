@@ -1,14 +1,18 @@
+import IonIcon from '@reacticons/ionicons'
 import { motion } from 'framer-motion'
 import { FormEvent, useState } from 'react'
-import IonIcon from '@reacticons/ionicons'
 
-import Button from '../../../components/Button'
-import View from '../../../motion/View'
 import { toast } from 'react-toastify'
+import Button from '../../../components/Button'
 import { useAppDispatch } from '../../../hooks/useRedux'
+import View from '../../../motion/View'
 import { authRegister } from '../../../redux/reducers/auth'
 
-const Register = () => {
+type RegisterProps = {
+    close: () => void
+}
+
+const Register = ({ close }: RegisterProps) => {
     const [Email, setEmail] = useState<string>('')
     const [Password, setPassword] = useState<string>('')
     const [RePassword, setRePassword] = useState<string>('')
@@ -18,6 +22,7 @@ const Register = () => {
     const regexEmail = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/
 
     const dispatch = useAppDispatch()
+
 
     const handleRegister = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -47,43 +52,44 @@ const Register = () => {
 
         dispatch(authRegister(dataForm))
 
+        close()
         setEmail('')
         setPassword('')
         setRePassword('')
+
     }
+
     return (
         <View className='w-full  flex gap-8 flex-col items-center'>
             <motion.form
-                initial={{ opacity: 0, y: 500 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className=' flex flex-col gap-4 w-full max-w-[25rem]  bg-gray-800 p-8 rounded-2xl shadow-2xl'
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, type: 'spring', bounce: 0.5 }}
+                className=' flex flex-col gap-4 w-full max-w-[25rem]  bg-[#0c0c0c] border border-[#161616] p-8 rounded-lg'
                 onSubmit={handleRegister}
             >
                 <View className='flex flex-col gap-2'>
-                    <label htmlFor='email' className='text-gray-800 text-[0.9rem]'>
+                    <label htmlFor='email' className='text-[#414141] text-[0.9rem]'>
                         Email
                     </label>
                     <input
                         type='text'
-                        placeholder='Email'
-                        className='rounded-lg py-2 text-[0.9rem] px-4 bg-transparent border  border-gray-500 focus:outline-none focus:bg-gray-700  duration-200'
+                        className='rounded-lg py-2 text-[0.9rem] px-4 bg-transparent border  border-[#2e2e2e] focus:outline-none focus:bg-[#242424]  duration-200'
                         value={Email}
                         onChange={(e) => setEmail(e.target.value)}
                         id='email'
                     />
                 </View>
                 <View className='flex flex-col gap-2'>
-                    <label htmlFor='password' className='text-gray-800 text-[0.9rem]'>
+                    <label htmlFor='password' className='text-[#414141] text-[0.9rem]'>
                         Mật khẩu
                     </label>
 
                     <View className='w-full relative flex items-center'>
                         <input
                             type={isShowPassword ? 'text' : 'password'}
-                            placeholder='Mật khẩu'
                             value={Password}
-                            className='rounded-lg w-full text-[0.9rem] font-medium  py-2 px-4 bg-transparent border   border-gray-500 focus:outline-none focus:bg-gray-700  duration-200'
+                            className='rounded-lg w-full text-[0.9rem] font-medium  py-2 px-4 bg-transparent border   border-[#2e2e2e] focus:outline-none focus:bg-[#242424]  duration-200'
                             onChange={(e) => setPassword(e.target.value)}
                             id='password'
                         />
@@ -102,14 +108,13 @@ const Register = () => {
                 </View>
 
                 <View className='flex flex-col gap-2'>
-                    <label htmlFor='re-password' className='text-gray-800 text-[0.9rem]'>
+                    <label htmlFor='re-password' className='text-[#414141] text-[0.9rem]'>
                         Nhập lại mật khẩu
                     </label>
                     <View className='w-full relative flex items-center'>
                         <input
                             type={isShowPassword ? 'text' : 'password'}
-                            placeholder='Nhập lại mật khẩu'
-                            className='rounded-lg w-full text-[0.9rem] font-medium  py-2 px-4 bg-transparent border   border-gray-500 focus:outline-none focus:bg-gray-700  duration-200'
+                            className='rounded-lg w-full text-[0.9rem] font-medium  py-2 px-4 bg-transparent border   border-[#2e2e2e] focus:outline-none focus:bg-[#242424]  duration-200'
                             value={RePassword}
                             onChange={(e) => setRePassword(e.target.value)}
                             id='re-password'
@@ -128,7 +133,7 @@ const Register = () => {
                     </View>
                 </View>
 
-                <Button className='mt-4  bg-[#ffffff50] text-[0.9rem] text-white font-medium py-2 rounded-lg'>Đăng ký</Button>
+                <Button className='mt-4 bg-[#3a393950] text-[0.8rem] text-gray-200 font-medium py-2 rounded-lg'>Đăng ký</Button>
             </motion.form>
         </View >
     )

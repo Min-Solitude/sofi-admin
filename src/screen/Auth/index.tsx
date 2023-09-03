@@ -30,18 +30,18 @@ const Auth = () => {
                 {isShowFormLogin ? (
                     <View className=' flex-1 flex w-full flex-col items-center gap-8'>
                         <Button
-                            className='w-[3.5rem] h-[3.5rem] rounded-full flex justify-center items-center bg-gray-900 border border-gray-800'
+                            className='flex justify-center items-center '
                             type='button'
                             onClick={() => setIsShowFormLogin(false)}
-                            initial={{ opacity: 0, y: -500 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, type: 'spring', bounce: 0.5 }}
                         >
                             <IonIcon name='close-outline' className='text-gray-500 text-[1.6rem]' />
                         </Button>
-                        {isLogin ? <Login /> : <Register />}
+                        {isLogin ? <Login /> : <Register close={() => setIsLogin(true)} />}
                         <Button onClick={() => setIsLogin(!isLogin)}>
-                            <span className='text-[0.9rem] font-light underline text-gray-600'>
+                            <span className='text-[0.8rem] font-light underline text-[#4b4b4b]'>
                                 {isLogin ? 'Đăng ký' : 'Đăng nhập'}
                             </span>
                         </Button>
