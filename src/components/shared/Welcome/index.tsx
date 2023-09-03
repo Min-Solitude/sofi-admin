@@ -19,7 +19,7 @@ const Welcome = () => {
   return (
     <View className="h-screen w-full bg-white relative cursor-pointer-welcome">
       <RiveComponent width={'100%'} height={'100%'} />
-      <motion.button className="absolute lg:bottom-[25%] bottom-[30%] left-[50%]  py-2 px-8 font-bold text-[0.9rem] shadow-md rounded-full bg-blue-500 text-white"
+      <motion.button className="absolute lg:bottom-[25%] bottom-[30%] left-[50%]  py-2 px-8 font-bold text-[0.9rem] border border-blue-600 rounded-full bg-blue-500 text-white"
         onClick={handleCloseWelcome}
         initial={{ opacity: 0, scale: 0.5, x: '-50%' }}
         animate={{ opacity: 1, scale: 1, x: '-50%' }}

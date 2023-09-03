@@ -6,11 +6,12 @@ import {
 } from "react-router-dom";
 import { routes } from "./configs";
 import history from "./redux/store/history";
+import Loading from "./components/shared/Loading";
 
 function App() {
   return (
     <div className="App overflow-x-hidden">
-      <Suspense fallback={"Loading..."}>
+      <Suspense fallback={<Loading />}>
         <ConnectedRouter history={history as any}>
           <Routes>
             {routes.map((route) => {

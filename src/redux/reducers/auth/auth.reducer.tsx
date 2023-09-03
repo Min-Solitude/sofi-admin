@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AuthPayload, AuthState } from './auth.type'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import history from '../../store/history'
 import { auth, db, provider, storage } from '../../../configs'
@@ -47,15 +47,18 @@ export const authLoginWithGoogle = createAsyncThunk('auth/authLoginWithGoogle', 
 // UPDATE DISPLAY NAME
 export const authUpdateDisplayName = createAsyncThunk('auth/authUpdateDisplayName', async (payload: string) => {
 
-    const user = auth.currentUser
+    const user = auth.currentUser as any;
+
+
 
     if (user) {
-        await setDoc(doc(db, 'users', user.uid), {
+        await updateProfile(user, {
             displayName: payload
-        }, { merge: true })
+        })
+
     }
 
-    return payload
+    return payload;
 
 })
 
@@ -66,9 +69,10 @@ export const authUpdatePhotoURL = createAsyncThunk('auth/authUpdatePhotoURL', as
         const imageRef = ref(storage, `users/${user.uid}/${payload.path}`)
         await uploadBytes(imageRef, payload, {})
         const downloadURL = await getDownloadURL(imageRef)
-        await setDoc(doc(db, 'users', user.uid), {
+
+        await updateProfile(user, {
             photoURL: downloadURL
-        }, { merge: true })
+        })
 
         return downloadURL
     }
@@ -76,7 +80,6 @@ export const authUpdatePhotoURL = createAsyncThunk('auth/authUpdatePhotoURL', as
 
 // REGISTER MEMBER
 export const authRegisterMember = createAsyncThunk('auth/authRegisterMember', async (payload: string) => {
-    console.log(payload);
 
     const user = auth.currentUser
 

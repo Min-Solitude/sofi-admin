@@ -63,7 +63,7 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
     const selected_images = selectedImages?.map((file: any) => (
-        <div key={file.name} className='break-inside-avoid   shadow-sm  '>
+        <div key={file.name} className='break-inside-avoid    shadow-sm  '>
             <img alt='nev' src={file.preview} className='rounded-lg shadow-sm' />
         </div>
     ))
@@ -103,7 +103,7 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
                     }>Tạo bài viết</h1>
                     <View className='w-full px-4 flex flex-col gap-4 items-center py-4 border-t border-[#2d2c2c]'>
                         <View className='w-full gap-2 flex items-center text-[0.8rem]'>
-                            <View className='w-[2rem] h-[2rem] rounded-full flex justify-center items-center'>
+                            <View className='w-[2rem] h-[2rem] overflow-hidden rounded-full flex justify-start items-center'>
                                 <img
                                     src={
                                         account?.photoURL
@@ -111,7 +111,7 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
                                             : 'https://firebasestorage.googleapis.com/v0/b/zoom-clone-2-0-1.appspot.com/o/avatars%2Fdefault-avatar.jpg?alt=media&token=1b2b0b1a-9b0a-4b0a-9b0a-4b0a9b0a4b0a'
                                     }
                                     alt='nev'
-                                    className='w-full h-full rounded-full'
+                                    className='w-full '
                                 />
                             </View>
                             <View className='flex items-center justify-between flex-1'>
@@ -119,7 +119,7 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
                                     className={`flex gap-2 items-center cursor-pointer py-1 duration-200 rounded-lg ${isBackgroud === 0 ? ' px-2 ' : 'bg-[#00000098]  px-4 '}`}
                                     onClick={() => setIsChangeNickName(true)}
                                 >
-                                    <h2 className='text-[0.9rem] font-bold '>{isNickName}</h2>
+                                    <h2 className='text-[0.9rem] font-bold '>{isNickName ? isNickName : 'Amonymous'}</h2>
                                     <IonIcon name='pencil-outline' className='text-[0.7rem] ' />
                                 </View>
 

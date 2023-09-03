@@ -72,15 +72,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         if (!accessToken) {
             history.push('/auth')
         }
-
-        // REMOVE POSTED IN LOCALSTORAGE AFTER 5 MINUTES
-
-        const checkPosted = localStorage.getItem('Posted')
-        if (checkPosted) {
-            setTimeout(() => {
-                localStorage.removeItem('Posted')
-            }, 300000)
-        }
     }, [])
 
     useEffect(() => {
@@ -105,6 +96,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         })
     }, [])
 
+
+    // REMOVE POSTED IN LOCALSTORAGE AFTER 5 MINUTES
+
+    const checkPosted = localStorage.getItem('Posted')
+    if (checkPosted) {
+        setTimeout(() => {
+            localStorage.removeItem('Posted')
+        }, 300000)
+    }
 
 
     return (

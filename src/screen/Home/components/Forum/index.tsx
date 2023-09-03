@@ -55,11 +55,11 @@ const Forum = () => {
     return (
         <View className='w-full max-w-[30rem]'>
             {accessToken && !checkPosted ? (
-                <View className='p-2 mb-8 mt-4 rounded-lg shadow-md border bg-[#201f1fae] border-gray-800 gap-4   text-[0.9rem] flex items-center'
+                <View className='p-2 mb-8 rounded-lg shadow-md border bg-[#201f1fae] border-gray-800 gap-4   text-[0.9rem] flex items-center'
                     onClick={() => setIsShowDropzone(true)}
 
                 >
-                    <View className='w-[2rem] shadow-lg h-[2rem] rounded-lg flex justify-center items-center'>
+                    <View className='w-[2rem] shadow-lg h-[2rem] rounded-lg flex justify-start overflow-hidden items-center'>
                         <img
                             src={
                                 account.photoURL
@@ -67,7 +67,7 @@ const Forum = () => {
                                     : 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'
                             }
                             alt='nev'
-                            className='w-full h-full rounded-lg'
+                            className='w-full '
                         />
                     </View>
                     <View
@@ -153,7 +153,7 @@ const Forum = () => {
                                 )
                             }
                             <View className='flex gap-2 mt-4 items-center relative'>
-                                <View className='w-[2.5rem] h-[2.5rem]  rounded-lg overflow-hidden flex justify-center items-center'>
+                                <View className='w-[2.5rem] h-[2.5rem] overflow-hidden  rounded-lg overflow-hidden flex justify-center items-center'>
                                     <img
                                         src={
                                             post.avatar
@@ -161,7 +161,7 @@ const Forum = () => {
                                                 : 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'
                                         }
                                         alt={post.nickName ? post.nickName : 'Anonymous'}
-                                        className='w-full h-full rounded-lg'
+                                        className='w-full'
                                     />
                                 </View>
                                 <View className='  flex-1 flex justify-between items-center '>
