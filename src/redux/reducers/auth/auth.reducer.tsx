@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import { toast } from 'react-toastify'
 import history from '../../store/history'
 import { auth, db, provider, storage } from '../../../configs'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const initialState: AuthState = {
@@ -84,12 +84,26 @@ export const authRegisterMember = createAsyncThunk('auth/authRegisterMember', as
     const user = auth.currentUser
 
     if (user) {
-        await setDoc(doc(db, 'users', user.uid), {
-            member: true
-        }, { merge: true })
+        await setDoc(doc(db, 'members', user.uid), {
+            uid: user.uid,
+        })
     }
 
     return payload
+})
+
+export const checkMember = createAsyncThunk('auth/checkMember', async (payload: string) => {
+
+    const docRef = doc(db, 'members', payload)
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return true
+    } else {
+        return false
+    }
+
 })
 
 
@@ -191,6 +205,11 @@ const reducer = createSlice({
         builder.addCase(authRegisterMember.fulfilled, (state, action: any) => {
             state.account.member = true
             toast.success('Cập nhật thành công')
+        })
+
+        // CHECK MEMBER
+        builder.addCase(checkMember.fulfilled, (state, action) => {
+            state.account.member = action.payload
         })
     }
 })

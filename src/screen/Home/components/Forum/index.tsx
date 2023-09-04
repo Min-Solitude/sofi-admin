@@ -55,7 +55,7 @@ const Forum = () => {
     return (
         <View className='w-full max-w-[30rem]'>
             {accessToken && !checkPosted ? (
-                <View className='p-2 mb-8 rounded-lg shadow-md border bg-[#201f1fae] border-gray-800 gap-4   text-[0.9rem] flex items-center'
+                <View className='p-2 mb-4 rounded-lg shadow-md border bg-[#201f1fae] border-gray-800 gap-4   text-[0.9rem] flex items-center'
                     onClick={() => setIsShowDropzone(true)}
 
                 >

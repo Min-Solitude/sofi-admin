@@ -1,13 +1,12 @@
+import IonIcon from '@reacticons/ionicons'
 import { useEffect, useState } from 'react'
+import Button from '../../components/Button'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux'
 import View from '../../motion/View'
+import { authLoginWithGoogle } from '../../redux/reducers/auth'
 import history from '../../redux/store/history'
 import Login from './Login'
-import IonIcon from '@reacticons/ionicons'
-import { authLoginWithGoogle } from '../../redux/reducers/auth'
 import Register from './Register'
-import Button from '../../components/Button'
-import Welcome from '../../components/shared/Welcome'
 
 const Auth = () => {
     const checkAccessToken = useAppSelector((state) => state.auth.accessToken)
@@ -26,9 +25,6 @@ const Auth = () => {
         dispatch(authLoginWithGoogle())
     }
 
-    if (!isWelcome) {
-        return <Welcome />
-    }
 
     return (
         <View className=' bg-black text-white font-medium min-h-screen flex justify-center items-center '>

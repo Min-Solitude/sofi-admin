@@ -1,15 +1,11 @@
+import IonIcon from '@reacticons/ionicons'
 import { useCallback, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { db, storage } from '../../configs'
-import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import View from '../../motion/View'
-import IonIcon from '@reacticons/ionicons'
-import Button from '../Button'
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux'
 import { toast } from 'react-toastify'
-import { motion } from 'framer-motion'
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux'
+import View from '../../motion/View'
 import { uploadPostOnFirebase } from '../../redux/reducers/post/post.reducer'
+import Button from '../Button'
 
 type DropzoneProps = {
     closeDropzone: () => void
@@ -22,6 +18,7 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
     const [isBackgroud, setIsBackgroud] = useState(0)
     const [isNickName, setIsNickName] = useState(account?.displayName)
     const [isChangeNickName, setIsChangeNickName] = useState(false)
+    const [isShowIcon, setIsShowIcon] = useState(false)
 
     const dispatch = useAppDispatch()
     const isLoading = useAppSelector((state) => state.post.isLoading)
@@ -169,6 +166,34 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
                                 type='text'
                                 placeholder='Tiêu đề'
                             />
+                            {/* ICON Smile */}
+                            <Button
+                                className='py-1 px-1 rounded-lg bg-[#ffffff31] relative flex justify-center items-center'
+                                onClick={() => setIsShowIcon(!isShowIcon)}
+                            >
+                                <IonIcon name='happy-outline' className='text-[1.2rem] text-white' />
+                                {
+                                    isShowIcon && (
+                                        <View className='absolute -bottom-8 right-0 flex justify-between items-center gap-2  py-1 px-2 rounded-lg bg-[#ffffff31] w-[20rem]'>
+                                            {
+                                                [
+                                                    '😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',
+                                                ].map((item, index) => (
+                                                    <Button key={index} className='flex justify-center items-center'
+                                                        onClick={() => {
+                                                            captionRef.current!.value += item
+                                                        }}
+                                                    >
+                                                        <span className='text-[0.9rem]'>
+                                                            {item}
+                                                        </span>
+                                                    </Button>
+                                                ))
+                                            }
+                                        </View>
+                                    )
+                                }
+                            </Button>
                         </View>
                     </View>
                     <div {...getRootProps()} className='w-full px-4'>
@@ -246,7 +271,7 @@ const Dropzone = ({ closeDropzone }: DropzoneProps) => {
                             />
                         </label>
                     </View> */}
-                    <View className=' mb-8 mt-4 w-full px-4'>
+                    < View className=' mb-8 mt-4 w-full px-4' >
                         <Button
                             onClick={uploadPost}
                             className={
