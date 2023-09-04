@@ -60,6 +60,23 @@ export const commentPost = createAsyncThunk(
     }
 )
 
+export const sendStory = createAsyncThunk(
+    'post/sendStory',
+    async (payload: { story: string; email: string; disPlayName: string; uid: string }) => {
+
+        await addDoc(collection(db, 'stories'), {
+            story: payload.story,
+            email: payload.email,
+            disPlayName: payload.disPlayName,
+            uid: payload.uid,
+            timestamp: serverTimestamp(),
+            status: false
+        })
+
+        return
+
+    })
+
 const reducer = createSlice({
     name: 'post',
     initialState,
@@ -69,6 +86,11 @@ const reducer = createSlice({
         builder.addCase(uploadPostOnFirebase.fulfilled, (state) => {
             localStorage.setItem('Posted', 'true')
             toast.success('Đăng bài thành công')
+        })
+
+        // Upload story
+        builder.addCase(sendStory.fulfilled, (state) => {
+            toast.success('Gửi thành công, tâm tư của bạn sẽ được kiểm duyệt, chờ đầu tuần sau nhé!!!')
         })
     }
 })

@@ -27,7 +27,7 @@ body {
 }
 
 .background-day-0 {
-  background-image: url(https://cdna.artstation.com/p/assets/images/images/012/252/242/4k/f-a-herold-summervillage-day.jpg?1533827344);
+  background-image: url(https://cdna.artstation.com/p/assets/images/images/057/246/862/large/chx-asset.jpg?1671123507);
   background-size: cover;
   background-position: center;
 }
@@ -44,8 +44,20 @@ body {
   background-position: center;
 }
 
+.background-day-3 {
+  background-image: url(https://cdna.artstation.com/p/assets/images/images/057/058/906/large/arseniy-chebynkin-michael-room-night-sermet.jpg?1670736827);
+  background-size: 120%;
+  background-position: center;
+}
+
+.background-day-4 {
+  background-image: url(https://cdnb.artstation.com/p/assets/images/images/016/167/597/large/glannon-robidou-2019-02-23-unyielding-field-day-version-low-res.jpg?1551170424);
+  background-size: cover;
+  background-position: center;
+}
+
 .background-night-0 {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/012/252/245/4k/f-a-herold-summervillage-night.jpg?1533827363);
+  background-image: url(https://cdna.artstation.com/p/assets/images/images/057/246/850/large/chx-asset.jpg?1671123485);
   background-size: cover;
   background-position: center;
 }
@@ -61,6 +73,19 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+.background-night-3 {
+  background-image: url(https://cdna.artstation.com/p/assets/images/images/057/057/794/large/arseniy-chebynkin-michael-room-night.jpg?1670730876);
+  background-size: 120%;
+  background-position: center;
+}
+
+.background-night-4 {
+  background-image: url(https://cdnb.artstation.com/p/assets/images/images/016/167/589/large/glannon-robidou-2019-02-24-unyielding-field5-night-version-low-res.jpg?1551170374);
+  background-size: cover;
+  background-position: center;
+}
+
 
 .switch {
   width: 4rem;

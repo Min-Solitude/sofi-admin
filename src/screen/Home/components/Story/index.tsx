@@ -1,52 +1,64 @@
 import { toast } from 'react-toastify'
 import View from '../../../../motion/View'
+import { useEffect, useState } from 'react'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { db } from '../../../../configs'
+import WatchStory from '../../../../components/WatchStory'
 
-const data = [
-    {
-        id: 1,
-        image: 'https://i.pinimg.com/736x/27/6d/98/276d9820399d61af5250f3c9e578b16d.jpg'
-    },
-    {
-        id: 2,
-        image: 'https://i.pinimg.com/564x/d0/93/c9/d093c9ce8ab2c4e25d585915a5c8f13f.jpg'
-    },
-    {
-        id: 3,
-        image: 'https://i.pinimg.com/564x/78/e3/61/78e36189eabfe932d285e70cd9474dd6.jpg'
-    },
-    {
-        id: 4,
-        image: 'https://i.pinimg.com/564x/51/55/17/5155171b69971f915234237360473c14.jpg'
-    },
-    {
-        id: 5,
-        image: 'https://i.pinimg.com/564x/51/f2/ff/51f2ff05caccae7ea4d72683405e4334.jpg'
-    },
-    {
-        id: 6,
-        image: 'https://i.pinimg.com/564x/bb/19/7c/bb197c6887c48031ab0ace210c2afe11.jpg'
-    },
-    {
-        id: 7,
-        image: 'https://i.pinimg.com/564x/d5/54/9b/d5549bab30e7f374e7ef2fec7456e89b.jpg'
-    }
-]
+export type StoryProps = {
+    disPlayName: string
+    email: string
+    id: string
+    status: boolean
+    story: string
+    timestamp: number
+    uid: string
+}
+
 
 const Story = () => {
+    const [isStory, setIsStory] = useState([])
+    const [isWatchStory, setIsWatchStory] = useState<string | null>(null)
+
+    useEffect(() => {
+        const collectionRef = collection(db, 'stories')
+        const q = query(collectionRef, orderBy('timestamp', 'desc'))
+        const unsubscribe = onSnapshot(q, (querySnapshot: any) => {
+            setIsStory(
+                querySnapshot.docs.map((doc: any) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                    timestamp: doc.data().timestamp?.toDate().getTime()
+                }))
+            )
+        })
+
+        return unsubscribe
+    }, [])
+
+
     return (
         <View className=' flex gap-4 w-full mt-4    m-auto  flex-col text-white'>
             <View className='carousel  carousel-center  max-w-[30rem] lg:max-w-none space-x-4  rounded-box'>
-                {data.map((item, index) => (
-                    <View className='carousel-item shadow-xl cursor-pointer w-[10rem] h-[15rem]' key={index}
-                        onClick={() => toast.success('Coming Soon')}
-                    >
-                        <img
-                            src={item.image}
-                            className='rounded-box object-cover w-full h-full'
-                        />
-                    </View>
-                ))}
+                {isStory.map((item: StoryProps, index) =>
+                    item.status && (
+                        <View className='carousel-item shadow-xl cursor-pointer px-2 w-[10rem] rounded-xl flex justify-center items-center bg-[#000000c7] h-[15rem]' key={index}
+                            onClick={() => {
+                                setIsWatchStory(item.story)
+                            }}
+                        >
+                            <i className='text-center text-[0.5rem]'>{item.story}</i>
+                        </View>
+                    )
+                )}
             </View>
+            {
+                isWatchStory && (
+                    <WatchStory close={() => setIsWatchStory(null)}>
+                        {isWatchStory}
+                    </WatchStory>
+                )
+            }
         </View>
     )
 }

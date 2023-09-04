@@ -90,9 +90,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         } else if (isChooseBackground === 1) {
             setIsBackgroundDay('background-day-1')
             setIsBackgroundNight('background-night-1')
-        } else {
+        } else if (isChooseBackground === 2) {
             setIsBackgroundDay('background-day-2')
             setIsBackgroundNight('background-night-2')
+        } else if (isChooseBackground === 3) {
+            setIsBackgroundDay('background-day-3')
+            setIsBackgroundNight('background-night-3')
+        } else {
+            setIsBackgroundDay('background-day-4')
+            setIsBackgroundNight('background-night-4')
         }
     }, [isChooseBackground])
 
@@ -134,10 +140,18 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <View className={
             `h-screen  flex items-end  bg-[#f0f0f0] duration-500 text-black ${background ? isBackgroundDay : isBackgroundNight}`
         }>
+            <View className='fixed lg:bottom-2 bottom-16 right-0 lg:right-auto lg:left-2 z-[50] w-[3rem] h-[3rem] rounded-full bg-black flex justify-center items-center cursor-pointer'
+                whileTap={{ scale: 0.9 }}
+                onClick={() => {
+                    history.push('/forum/story')
+                }}
+            >
+                <IonIcon name='mail-outline' className='text-white  text-[1.5rem]' />
+            </View>
             {checkMobile ? <Navigation /> : <SideBar />}
             <Header />
             <main className='lg:m-auto z-10 h-[89.5vh] relative overflow-y-scroll  lg:w-[80%]  xl:w-[60%] w-full  font-medium'>
-                <Button className=' hidden lg:block left-[30%] group lg:fixed top-[40%] w-[1.2rem] h-[1.2rem] rounded-full border-2 border-white bg-[#ffffff83]'
+                <Button className=' hidden lg:block left-[10%] group lg:fixed top-[40%] w-[1.2rem] h-[1.2rem] rounded-full border-2 border-white bg-[#ffffff83]'
                     onClick={() => {
                         setIsRain(!isRain)
                         if (isRain) {

@@ -93,8 +93,8 @@ const Header = () => {
 
 
     return (
-        <header className={`fixed left-0  bg-[#0000006d] lg:bg-transparent  flex flex-col lg:flex-row gap-2 lg:gap-0 top-0 items-center lg:justify-between   w-full p-2 z-[100]  `}>
-            <Logo className='text-[1.5rem] ' />
+        <header className={`fixed left-0 bg-[#000000f1]  lg:bg-[#0000006d] lg:bg-transparent  flex flex-col lg:flex-row gap-2 lg:gap-0 top-0 items-center lg:justify-between   w-full p-2 z-[100]  `}>
+            <Logo className='lg:text-[1.5rem] text-[1rem] ' />
 
             <View className='flex gap-4 duration-200 items-center '>
                 <View className="flex gap-2 items-center py-2 px-4 rounded-lg bg-[#0000006d]">
@@ -144,7 +144,7 @@ const Header = () => {
 
             {
                 isShowBanner && (
-                    <View className="bottom-28 cursor-pointer lg:w-[40rem] lg:left-2 lg:bottom-2 fixed z-50 flex gap-2 items-center p-2 bg-black w-full rounded-lg  left-0"
+                    <View className="bottom-28 cursor-pointer lg:w-[60rem] lg:left-2 lg:bottom-2 fixed z-50 flex gap-2 items-center p-2 bg-black w-full rounded-lg  left-0"
                         initial={{ y: 200 }}
                         animate={{ y: 0 }}
                         exit={{ x: 200 }}
@@ -152,9 +152,11 @@ const Header = () => {
                     >
                         {
                             [
-                                'https://cdna.artstation.com/p/assets/images/images/012/252/242/4k/f-a-herold-summervillage-day.jpg?1533827344',
+                                'https://cdna.artstation.com/p/assets/images/images/057/246/862/large/chx-asset.jpg?1671123507',
                                 'https://cdnb.artstation.com/p/assets/images/images/022/937/573/large/anastasiia-kriukova-day-final-srgb.jpg?1577374315',
                                 'https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810',
+                                'https://cdna.artstation.com/p/assets/images/images/057/058/906/large/arseniy-chebynkin-michael-room-night-sermet.jpg?1670736827',
+                                'https://cdnb.artstation.com/p/assets/images/images/016/167/597/large/glannon-robidou-2019-02-23-unyielding-field-day-version-low-res.jpg?1551170424'
                             ].map((item, index) => (
                                 <View key={index} className={`overflow-hidden rounded-lg border duration-200 h-[5rem] lg:h-[8rem] flex-1 ${background === index ? 'border-yellow-400' : 'border-transparent'
                                     }`}
