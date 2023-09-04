@@ -155,7 +155,7 @@ const Header = () => {
                                 'https://cdna.artstation.com/p/assets/images/images/057/246/862/large/chx-asset.jpg?1671123507',
                                 'https://cdnb.artstation.com/p/assets/images/images/022/937/573/large/anastasiia-kriukova-day-final-srgb.jpg?1577374315',
                                 'https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810',
-                                'https://cdna.artstation.com/p/assets/images/images/057/058/906/large/arseniy-chebynkin-michael-room-night-sermet.jpg?1670736827',
+                                'https://cdna.artstation.com/p/assets/images/images/046/346/002/large/erik-arias-mossy-forest-moss-render0001.jpg?1644906576',
                                 'https://cdnb.artstation.com/p/assets/images/images/016/167/597/large/glannon-robidou-2019-02-23-unyielding-field-day-version-low-res.jpg?1551170424'
                             ].map((item, index) => (
                                 <View key={index} className={`overflow-hidden rounded-lg border duration-200 h-[5rem] lg:h-[8rem] flex-1 ${background === index ? 'border-yellow-400' : 'border-transparent'
