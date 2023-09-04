@@ -137,7 +137,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             {checkMobile ? <Navigation /> : <SideBar />}
             <Header />
             <main className='lg:m-auto z-10 h-[89.5vh] relative overflow-y-scroll  lg:w-[80%]  xl:w-[60%] w-full  font-medium'>
-                <Button className=' hidden lg:block left-[30%] group lg:fixed bg-yellow-300 top-[40%] w-[1.2rem] h-[1.2rem] rounded-full border-2 border-white bg-[#ffffff83]'
+                <Button className=' hidden lg:block left-[30%] group lg:fixed top-[40%] w-[1.2rem] h-[1.2rem] rounded-full border-2 border-white bg-[#ffffff83]'
                     onClick={() => {
                         setIsRain(!isRain)
                         if (isRain) {
@@ -157,7 +157,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                         <RiveComponent width={'100%'} height={'100%'} />
                         {
                             isMessage && (
-                                <View className='absolute duration-200 text-[0.8rem] py-1 px-2 w-[6rem] text-center top-[-1rem] lg:right-0 right-[-2.5rem] bg-black rounded-lg text-white'
+                                <View className={`absolute duration-200 text-[0.8rem] py-1 px-2 w-[6rem] text-center top-[-1rem] right-[-2.5rem] bg-black rounded-lg text-white ${isRain ? 'lg:right-10' : 'lg:right-0'} `}
 
                                 >
                                     <span>
