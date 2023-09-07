@@ -9,8 +9,8 @@ const Home = () => {
 
     return (
         <>
-            <Section>
-                <View className='px-2 w-full '>
+            <Section >
+                <View className='px-2 w-full'>
                     <View className='w-full  max-w-[30rem] lg:max-w-none m-auto'>
                         <Story />
                     </View>

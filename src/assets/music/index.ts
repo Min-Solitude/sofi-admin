@@ -1,11 +1,11 @@
-import ueueueue from './y2mate.com - Tiếng Hóc Xương Lofi Cực Chill.mp3'
-import friend from './y2mate.com - Tiếng đồng đội chửi lofi cực chill giúp buff sức mạnh đánh tan team địch.mp3'
-import dog from './y2mate.com - Tiếng chó LoFi sủa cực chill và ấm  Tuanuki.mp3'
+import deg from "./y2mate.com - 벤 Ben  180도 180 Degree Instrumental 180.mp3";
+import udon from "./y2mate.com - Udon bus.mp3";
+import hopmix from "./y2mate.com - lofi hip hop mix radiobeat to relaxstudy too10 min.mp3";
 
 const music = {
-    ueueueue,
-    friend,
-    dog,
-}
+  deg,
+  udon,
+  hopmix,
+};
 
-export default music
+export default music;

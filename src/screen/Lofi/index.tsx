@@ -31,9 +31,9 @@ const Lofi = () => {
     }, []);
 
     return (
-        <View className='h-[85vh]'>
+        <View className='h-[85vh] '>
             <motion.div
-                className='fixed z-50 lg:top-[70%] lg:left-[20%] top-[20%] left-1/2 translate-x-[-50%] text-white cursor-move'
+                className='fixed z-50 lg:top-[70%] lg:left-[20%] top-[20%] left-1/2 translate-x-[-50%] text-white  cursor-move'
                 drag
             >
                 <View className='mb-4'>

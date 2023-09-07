@@ -136,7 +136,6 @@ const reducer = createSlice({
         })
         builder.addCase(authRegister.fulfilled, (state, action) => {
             state.loading = false
-            toast.success('Đăng ký thành công')
         })
 
         // LOGIN WITH ACCOUNT
@@ -154,7 +153,6 @@ const reducer = createSlice({
                 member: action.payload.member
             }
 
-            toast.success('Đăng nhập thành công')
             history.push('/')
         })
 
@@ -173,7 +171,6 @@ const reducer = createSlice({
                 member: action.payload.member
             }
 
-            toast.success('Đăng nhập thành công')
             history.push('/')
         })
 
@@ -183,19 +180,14 @@ const reducer = createSlice({
         })
         builder.addCase(authUpdateDisplayName.fulfilled, (state, action: any) => {
             state.account.displayName = action.payload
-            toast.success('Cập nhật thành công')
         })
 
         // UPDATE PHOTO URL
         builder.addCase(authUpdatePhotoURL.rejected, () => {
             toast.error('Cập nhật thất bại')
         })
-        builder.addCase(authUpdatePhotoURL.pending, () => {
-            toast.info('Đang cập nhật...')
-        })
         builder.addCase(authUpdatePhotoURL.fulfilled, (state, action: any) => {
             state.account.photoURL = action.payload
-            toast.success('Cập nhật thành công')
         })
 
         // REGISTER MEMBER
@@ -204,7 +196,6 @@ const reducer = createSlice({
         })
         builder.addCase(authRegisterMember.fulfilled, (state, action: any) => {
             state.account.member = true
-            toast.success('Cập nhật thành công')
         })
 
         // CHECK MEMBER
