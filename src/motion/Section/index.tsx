@@ -2,6 +2,8 @@ import { useInView } from "framer-motion";
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 
+
+
 interface sectionProps {
   children: React.ReactNode;
 }
