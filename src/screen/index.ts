@@ -28,6 +28,11 @@ const routes: Route[] = [
     component: React.lazy(() => import("./Story")),
     layout: MainLayout,
   },
+  {
+    path: "/safari",
+    component: React.lazy(() => import("./Safari")),
+    layout: null,
+  },
 ];
 
 export default routes;

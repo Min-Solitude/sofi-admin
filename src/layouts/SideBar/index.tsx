@@ -37,6 +37,16 @@ const SideBar = () => {
                     <IonIcon name='information-circle-outline' className='text-xl text-[#d6d4d4]' />
                 </NavLink>
                 <NavLink
+                    to='/safari'
+                    className={(nav) =>
+                        nav.isActive
+                            ? 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#ffffff70]'
+                            : 'rounded-lg  w-[2.5rem] h-[2.5rem] flex justify-center items-center bg-[#00000070]'
+                    }
+                >
+                    <IonIcon name='compass-outline' className='text-xl text-[#d6d4d4]' />
+                </NavLink>
+                <NavLink
                     to='https://www.nevsolit.website/'
                     className={(nav) =>
                         nav.isActive
