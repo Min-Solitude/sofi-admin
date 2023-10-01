@@ -37,61 +37,61 @@ body {
   
 
 .background-day-0 {
-  background-image: url(https://cdna.artstation.com/p/assets/images/images/057/246/862/large/chx-asset.jpg?1671123507);
+  background-image: url(./assets/img/pexels-daan-stevens-939331.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-day-1 {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/022/937/573/large/anastasiia-kriukova-day-final-srgb.jpg?1577374315);
+  background-image: url(./assets/img/pexels-lucas-craig-3714339.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-day-2 {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/022/272/149/4k/naka-isurita-environment-sketching-7-day.jpg?1574784810);
+  background-image: url(./assets/img/pexels-maël-balland-3457334.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-day-3 {
-  background-image: url(https://cdna.artstation.com/p/assets/images/images/046/346/002/large/erik-arias-mossy-forest-moss-render0001.jpg?1644906576);
+  background-image: url(./assets/img/pexels-medhat-ayad-439227.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-day-4 {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/016/167/597/large/glannon-robidou-2019-02-23-unyielding-field-day-version-low-res.jpg?1551170424);
+  background-image: url(./assets/img/pexels-pixabay-265004.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-night-0 {
-  background-image: url(https://cdna.artstation.com/p/assets/images/images/057/246/850/large/chx-asset.jpg?1671123485);
+  background-image: url(./assets/img/pexels-polina-zimmerman-3747299.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-night-1 {
-  background-image: url(https://cdna.artstation.com/p/assets/images/images/022/937/578/large/anastasiia-kriukova-night-final-srgb.jpg?1577374060);
+  background-image: url(./assets/img/pexels-polina-zimmerman-3747415.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-night-2 {
-  background-image: url(https://cdna.artstation.com/p/assets/images/images/022/272/150/4k/naka-isurita-environment-sketching-7-night.jpg?1574784816);
+  background-image: url(./assets/img/pexels-rafael-cosquiere-2041540.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-night-3 {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/046/346/397/large/erik-arias-wellside-hiker-night.jpg?1644908013);
+  background-image: url(./assets/img/pexels-tirachard-kumtanom-733856.jpg);
   background-size: cover;
   background-position: center;
 }
 
 .background-night-4 {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/016/167/589/large/glannon-robidou-2019-02-24-unyielding-field5-night-version-low-res.jpg?1551170374);
+  background-image: url(./assets/img/pexels-yena-kwon-3643406.jpg);
   background-size: cover;
   background-position: center;
 }
