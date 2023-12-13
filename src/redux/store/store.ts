@@ -13,18 +13,12 @@ import {
 } from 'redux-persist'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2'
 import storage from 'redux-persist/lib/storage'
-import history from './history'
 import { AuthReducer } from '../reducers/auth/auth.reducer'
-import { PostReducer } from '../reducers/post/post.reducer'
-import { ScreenReducer } from '../reducers/screen/screen.reducer'
-import { MusicReducer } from '../reducers/music/music.reducer'
+import history from './history'
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
     auth: AuthReducer,
-    post: PostReducer,
-    screen: ScreenReducer,
-    music: MusicReducer
 })
 
 type RootState = ReturnType<typeof rootReducer>

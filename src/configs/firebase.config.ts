@@ -5,13 +5,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDVKb7VMWsFEXxjZqkqYXKlNSVWq5Id6mI",
-  authDomain: "nevsad-a0ab3.firebaseapp.com",
-  projectId: "nevsad-a0ab3",
-  storageBucket: "nevsad-a0ab3.appspot.com",
-  messagingSenderId: "466401843232",
-  appId: "1:466401843232:web:16cfddede66b80da768445",
-  measurementId: "G-DN15XPN7VS",
+  apiKey: "AIzaSyA1oTiZyU_5VVvHLiPpfJixqcMuQkWq7oY",
+  authDomain: "sofi-website-b4bb7.firebaseapp.com",
+  projectId: "sofi-website-b4bb7",
+  storageBucket: "sofi-website-b4bb7.appspot.com",
+  messagingSenderId: "69731134414",
+  appId: "1:69731134414:web:acc7e42c9533bf03d4d99f",
+  measurementId: "G-3VYS9RCYJ2"
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

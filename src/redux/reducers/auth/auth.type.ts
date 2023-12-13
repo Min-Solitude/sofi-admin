@@ -1,18 +1,22 @@
 export type AuthState = {
-  accessToken: string;
-  account: accountState;
+  listUser: User[] | null;
   loading: boolean;
 };
 
-type accountState = {
+export type User = {
+  account: string;
+  banner?: string;
+  displayName?: string;
+  email?: string;
+  loginBy: string;
+  phoneNumber?: string;
+  photoURL?: string;
+  role: string;
   uid: string;
-  email: string;
-  photoURL: string;
-  displayName: string;
-  member: boolean;
-};
-
-export type AuthPayload = {
-  email: string;
-  password: string;
+  vip: {
+    createdAt: Date | null;
+    expiredAt: Date | null;
+    package: string | null;
+    isVip: boolean;
+  };
 };

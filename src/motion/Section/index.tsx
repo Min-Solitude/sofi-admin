@@ -6,16 +6,17 @@ import { motion } from "framer-motion";
 
 interface sectionProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-const Section = ({ children }: sectionProps) => {
+const Section = ({ children, className }: sectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
 
   return (
     <motion.section
       ref={ref}
-      className="w-full"
+      className={`w-full ${className}`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.5, delay: 0.2 }}

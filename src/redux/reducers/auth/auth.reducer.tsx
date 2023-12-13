@@ -1,206 +1,166 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AuthPayload, AuthState } from './auth.type'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
+import { AuthState, User } from './auth.type'
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { db } from '../../../configs'
 import { toast } from 'react-toastify'
-import history from '../../store/history'
-import { auth, db, provider, storage } from '../../../configs'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const initialState: AuthState = {
-    accessToken: '',
-    account: {
-        uid: '',
-        displayName: '',
-        photoURL: '',
-        email: '',
-        member: false
-    },
+    listUser: [],
     loading: false,
 }
 
-// REGISTER
-export const authRegister = createAsyncThunk('auth/authRegister', async (payload: AuthPayload) => {
-    const { email, password } = payload
+export const getAllUser = createAsyncThunk(
+    'auth/getAllUser',
+    async (payload: { search: string }) => {
+        let userQuery;
 
-    const { user } = await createUserWithEmailAndPassword(auth, email, password)
+        if (payload.search) {
+            // Có search keyword
+            userQuery = query(collection(db, "users"), where("phone", "==", payload.search));
 
-    return user
-})
+        } else {
+            userQuery = query(collection(db, "users"));
+        }
 
-// LOGIN WITH ACCOUNT
-export const authLoginWithAccount = createAsyncThunk('auth/authLoginWithAccount', async (payload: AuthPayload) => {
-    const { email, password } = payload
+        const userSnapshot = await getDocs(userQuery);
 
-    const { user } = await signInWithEmailAndPassword(auth, email, password)
+        const users = userSnapshot.docs.map(doc => {
 
-    return user
-})
+            return {
+                uid: doc.id,
+                ...doc.data(),
+            };
+        }) as User[];
 
-// LOGIN WITH GOOGLE
-export const authLoginWithGoogle = createAsyncThunk('auth/authLoginWithGoogle', async () => {
-    const { user } = await signInWithPopup(auth, provider)
-
-    return user
-})
-
-// UPDATE DISPLAY NAME
-export const authUpdateDisplayName = createAsyncThunk('auth/authUpdateDisplayName', async (payload: string) => {
-
-    const user = auth.currentUser as any;
-
-
-
-    if (user) {
-        await updateProfile(user, {
-            displayName: payload
-        })
-
+        return users;
     }
+)
 
-    return payload;
+export const getAllUserVip = createAsyncThunk(
+    'auth/getAllUserVip',
+    async () => {
+        const userQuery = query(collection(db, "users"), where("vip.isVip", "==", true));
 
-})
+        const userSnapshot = await getDocs(userQuery);
 
-// UPDATE PHOTO URL
-export const authUpdatePhotoURL = createAsyncThunk('auth/authUpdatePhotoURL', async (payload: any) => {
-    const user = auth.currentUser
-    if (user) {
-        const imageRef = ref(storage, `users/${user.uid}/${payload.path}`)
-        await uploadBytes(imageRef, payload, {})
-        const downloadURL = await getDownloadURL(imageRef)
+        const users = userSnapshot.docs.map(doc => {
 
-        await updateProfile(user, {
-            photoURL: downloadURL
-        })
+            return {
+                uid: doc.id,
+                ...doc.data(),
+            };
+        }) as User[];
 
-        return downloadURL
+        return users;
     }
-})
+)
 
-// REGISTER MEMBER
-export const authRegisterMember = createAsyncThunk('auth/authRegisterMember', async (payload: string) => {
+export const updateVipAccount = createAsyncThunk(
+    'auth/updateVipAccount',
+    async (payload: { id: string, package: string, titleNotice: string, contentNotice: string }) => {
 
-    const user = auth.currentUser
+        let expiredAt;
 
-    if (user) {
-        await setDoc(doc(db, 'members', user.uid), {
-            uid: user.uid,
-        })
+        if (payload.package === 'month') {
+            expiredAt = new Date().getTime() + 30 * 24 * 60 * 60 * 1000;
+
+        } else if (payload.package === 'year') {
+
+            expiredAt = new Date().getTime() + 365 * 24 * 60 * 60 * 1000;
+
+        }
+
+        let createdAt = new Date().getTime();
+
+        const userRef = doc(db, "users", payload.id);
+
+        await updateDoc(userRef, {
+            vip: {
+                isVip: true,
+                createdAt,
+                expiredAt,
+                package: payload.package,
+            }
+        });
+
+        const noticeRef = collection(db, "notices");
+
+        await addDoc(noticeRef, {
+            title: payload.titleNotice,
+            content: payload.contentNotice,
+            createdAt: Date.now(),
+            userId: payload.id,
+            status: 'unread',
+        });
+
+        return true;
     }
+)
 
-    return payload
-})
+export const destroyVipAccount = createAsyncThunk(
+    'auth/destroyVipAccount',
+    async (payload: { id: string }) => {
 
-export const checkMember = createAsyncThunk('auth/checkMember', async (payload: string) => {
+        const userRef = doc(db, "users", payload.id);
 
-    const docRef = doc(db, 'members', payload)
+        await updateDoc(userRef, {
+            vip: {
+                isVip: false,
+                createdAt: null,
+                expiredAt: null,
+                package: null,
+            }
+        });
 
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-        return true
-    } else {
-        return false
+        return true;
     }
-
-})
-
-
-
+)
 
 const reducer = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        handleLogout: (state: AuthState) => {
-            state.accessToken = ''
-            state.account = {
-                uid: '',
-                displayName: '',
-                photoURL: '',
-                email: '',
-                member: false
-            }
-            history.push('/auth')
-        }
+        handleLogout: (state) => { }
     },
     extraReducers: (builder) => {
-        // REGISTER
-        builder.addCase(authRegister.rejected, (state, action) => {
-            state.loading = false
-            toast.error('Đăng ký thất bại')
-        })
-        builder.addCase(authRegister.pending, (state, action) => {
+        builder.addCase(getAllUser.pending, (state) => {
             state.loading = true
         })
-        builder.addCase(authRegister.fulfilled, (state, action) => {
+        builder.addCase(getAllUser.fulfilled, (state, action) => {
+            state.listUser = action.payload
             state.loading = false
         })
 
-        // LOGIN WITH ACCOUNT
-        builder.addCase(authLoginWithAccount.rejected, () => {
-            toast.error('Đăng nhập thất bại')
+        builder.addCase(getAllUserVip.pending, (state) => {
+            state.loading = true
         })
-        builder.addCase(authLoginWithAccount.fulfilled, (state, action: any) => {
-            state.accessToken = action.payload.accessToken
-
-            state.account = {
-                uid: action.payload.uid,
-                displayName: action.payload.displayName,
-                photoURL: action.payload.photoURL,
-                email: action.payload.email,
-                member: action.payload.member
-            }
-
-            history.push('/')
+        builder.addCase(getAllUserVip.fulfilled, (state, action) => {
+            state.listUser = action.payload
+            state.loading = false
         })
 
-        // LOGIN WITH GOOGLE
-        builder.addCase(authLoginWithGoogle.rejected, () => {
-            toast.error('Đăng nhập thất bại')
+        builder.addCase(updateVipAccount.pending, (state) => {
+            state.loading = true
         })
-        builder.addCase(authLoginWithGoogle.fulfilled, (state, action: any) => {
-            state.accessToken = action.payload.accessToken
-
-            state.account = {
-                uid: action.payload.uid,
-                displayName: action.payload.displayName,
-                photoURL: action.payload.photoURL,
-                email: action.payload.email,
-                member: action.payload.member
-            }
-
-            history.push('/')
+        builder.addCase(updateVipAccount.rejected, (state) => {
+            state.loading = false
+            toast.error('Nâng cấp gói VIP thất bại!')
+        })
+        builder.addCase(updateVipAccount.fulfilled, (state, action) => {
+            state.loading = false
+            toast.success('Nâng cấp gói VIP thành công!')
         })
 
-        // UPDATE DISPLAY NAME
-        builder.addCase(authUpdateDisplayName.rejected, () => {
-            toast.error('Cập nhật thất bại')
+        builder.addCase(destroyVipAccount.pending, (state) => {
+            state.loading = true
         })
-        builder.addCase(authUpdateDisplayName.fulfilled, (state, action: any) => {
-            state.account.displayName = action.payload
+        builder.addCase(destroyVipAccount.rejected, (state) => {
+            state.loading = false
+            toast.error('Hủy gói VIP thất bại!')
         })
-
-        // UPDATE PHOTO URL
-        builder.addCase(authUpdatePhotoURL.rejected, () => {
-            toast.error('Cập nhật thất bại')
-        })
-        builder.addCase(authUpdatePhotoURL.fulfilled, (state, action: any) => {
-            state.account.photoURL = action.payload
-        })
-
-        // REGISTER MEMBER
-        builder.addCase(authRegisterMember.rejected, () => {
-            toast.error('Cập nhật thất bại')
-        })
-        builder.addCase(authRegisterMember.fulfilled, (state, action: any) => {
-            state.account.member = true
-        })
-
-        // CHECK MEMBER
-        builder.addCase(checkMember.fulfilled, (state, action) => {
-            state.account.member = action.payload
+        builder.addCase(destroyVipAccount.fulfilled, (state, action) => {
+            state.loading = false
+            toast.success('Hủy gói VIP thành công!')
         })
     }
 })
