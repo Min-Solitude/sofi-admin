@@ -31,6 +31,10 @@ export default function SideBar({ className }: SideBarProps) {
                     <IonIcon name='newspaper' className='text-xl' />
                     <span>Bài viết</span>
                 </NavLink>
+                <NavLink to='/system' className={(active) => `flex items-center gap-4 py-2 px-4 rounded-lg ${active.isActive ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white' : 'text-gray-500'}`}>
+                    <IonIcon name='settings' className='text-xl' />
+                    <span>Hệ thống</span>
+                </NavLink>
             </div>
         </div >
     )

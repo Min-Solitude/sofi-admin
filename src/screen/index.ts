@@ -18,6 +18,11 @@ const routes: Route[] = [
     component: React.lazy(() => import("./Dashboard")),
     layout: MainLayout,
   },
+  {
+    path: "/system",
+    component: React.lazy(() => import("./System")),
+    layout: MainLayout,
+  },
 ];
 
 export default routes;
