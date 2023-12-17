@@ -14,4 +14,5 @@ export type SettingFileTray = {
   background: string;
   title: string;
   status: boolean;
+  noticeErr: string;
 };

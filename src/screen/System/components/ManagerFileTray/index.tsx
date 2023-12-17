@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../../components/customs/Button";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useRedux";
-import { updateFileTray } from "../../../../redux/reducers/setting/setting.reducer";
+import { getFileTray, updateFileTray } from "../../../../redux/reducers/setting/setting.reducer";
 import Loading from "../../../../components/shared/Loading";
 import Section from "../../../../motion/Section";
 
@@ -12,14 +12,16 @@ type ManagerFileTrayProps = {
 
 export default function ManagerFileTray(props: ManagerFileTrayProps) {
 
-    const [isValueTitle, setIsValueTitle] = useState('')
-    const [isUrlBackground, setIsUrlBackground] = useState('')
-    const [isValueStatus, setIsValueStatus] = useState(false)
+    const [isValueTitle, setIsValueTitle] = useState(useAppSelector(state => state.setting.fileTray.title))
+    const [isUrlBackground, setIsUrlBackground] = useState(useAppSelector(state => state.setting.fileTray.background))
+    const [isValueStatus, setIsValueStatus] = useState(useAppSelector(state => state.setting.fileTray.status))
+    const [isNoticeError, setIsNoticeError] = useState(useAppSelector(state => state.setting.fileTray.noticeErr))
+
     const loading = useAppSelector(state => state.setting.loading)
     const dispatch = useAppDispatch()
 
     const handleUpdateFileTray = () => {
-        if (!isValueTitle || !isUrlBackground) return toast.error('Vui lòng nhập đầy đủ thông tin')
+        if (!isValueTitle || !isUrlBackground || !isNoticeError) return toast.error('Vui lòng nhập đầy đủ thông tin')
 
         const regex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g
         if (!regex.test(isUrlBackground)) return toast.error('Link ảnh không hợp lệ')
@@ -27,11 +29,16 @@ export default function ManagerFileTray(props: ManagerFileTrayProps) {
         dispatch(updateFileTray({
             title: isValueTitle,
             background: isUrlBackground,
-            status: isValueStatus
+            status: isValueStatus,
+            noticeErr: isNoticeError
         })
 
         )
     }
+
+    useEffect(() => {
+        dispatch(getFileTray())
+    }, [])
 
     return (
         <Section className={`flex flex-col gap-4 ${props.className}`}>
@@ -48,12 +55,21 @@ export default function ManagerFileTray(props: ManagerFileTrayProps) {
                 />
             </div>
             <div className='flex flex-col gap-2 w-full'>
-                <label htmlFor="title" className='font-semibold text-base text-gray-700'>
+                <label htmlFor="url" className='font-semibold text-base text-gray-700'>
                     Link ảnh nền
                 </label>
-                <input type="text" id='title' name='title' placeholder='Link ảnh nền' className='py-3 px-4 rounded-lg border outline-none border-gray-200'
+                <input type="text" id='url' name='url' placeholder='Link ảnh nền' className='py-3 px-4 rounded-lg border outline-none border-gray-200'
                     value={isUrlBackground}
                     onChange={(e) => setIsUrlBackground(e.target.value)}
+                />
+            </div>
+            <div className='flex flex-col gap-2 w-full'>
+                <label htmlFor="err" className='font-semibold text-base text-gray-700'>
+                    Thông báo lỗi
+                </label>
+                <input type="text" id='err' name='err' placeholder='Link ảnh nền' className='py-3 px-4 rounded-lg border outline-none border-gray-200'
+                    value={isNoticeError}
+                    onChange={(e) => setIsNoticeError(e.target.value)}
                 />
             </div>
             <div className='flex items-center gap-2 w-full'>

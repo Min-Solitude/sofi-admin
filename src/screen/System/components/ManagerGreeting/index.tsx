@@ -1,10 +1,10 @@
-import React from 'react'
-import Section from '../../../../motion/Section'
-import Button from '../../../../components/customs/Button'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/useRedux'
-import { updateGreeting } from '../../../../redux/reducers/setting/setting.reducer'
+import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
+import Button from '../../../../components/customs/Button'
 import Loading from '../../../../components/shared/Loading'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/useRedux'
+import Section from '../../../../motion/Section'
+import { getGreetings, updateGreeting } from '../../../../redux/reducers/setting/setting.reducer'
 
 type ManagerGrettingProps = {
     className?: string
@@ -32,6 +32,10 @@ export default function ManagerGretting({ className }: ManagerGrettingProps) {
 
         dispatch(updateGreeting(payload))
     }
+
+    useEffect(() => {
+        dispatch(getGreetings())
+    }, [])
 
     return (
         <Section className={`flex flex-col gap-4 ${className}`}>

@@ -15,8 +15,28 @@ const initialState: SettingState = {
     background: "",
     title: "",
     status: false,
+    noticeErr: "",
   },
 };
+
+export const getGreetings = createAsyncThunk(
+  "setting/getGreetings",
+  async () => {
+    const noticeRef = collection(db, "setting");
+
+    const docSettings = await getDoc(doc(noticeRef, "Greeting"));
+
+    if (docSettings.exists()) {
+      return docSettings.data();
+    } else {
+      return {
+        title: "",
+        content: "",
+        status: false,
+      };
+    }
+  }
+);
 
 export const updateGreeting = createAsyncThunk(
   "setting/updateGreeting",
@@ -46,9 +66,31 @@ export const updateGreeting = createAsyncThunk(
   }
 );
 
+export const getFileTray = createAsyncThunk("setting/getFileTray", async () => {
+  const noticeRef = collection(db, "setting");
+
+  const docSettings = await getDoc(doc(noticeRef, "FileTray"));
+
+  if (docSettings.exists()) {
+    return docSettings.data();
+  } else {
+    return {
+      background: "",
+      title: "",
+      status: false,
+      noticeErr: "",
+    };
+  }
+});
+
 export const updateFileTray = createAsyncThunk(
   "setting/updateFileTray",
-  async (payload: { background: string; title: string; status: boolean }) => {
+  async (payload: {
+    background: string;
+    title: string;
+    status: boolean;
+    noticeErr: string;
+  }) => {
     const noticeRef = collection(db, "setting");
 
     const docSettings = await getDoc(doc(noticeRef, "FileTray"));
@@ -59,6 +101,7 @@ export const updateFileTray = createAsyncThunk(
         background: payload.background,
         title: payload.title,
         status: payload.status,
+        noticeErr: payload.noticeErr,
       });
     }
     // Nếu đã tồn tại, update những trường thay đổi
@@ -66,6 +109,7 @@ export const updateFileTray = createAsyncThunk(
       await updateDoc(doc(noticeRef, "FileTray"), {
         background: payload.background,
         title: payload.title,
+        noticeErr: payload.noticeErr,
         status: payload.status,
       });
     }
@@ -77,10 +121,18 @@ export const updateFileTray = createAsyncThunk(
 const reducer = createSlice({
   name: "setting",
   initialState,
-  reducers: {
-    handleLogout: (state) => {},
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getGreetings.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.greeting = {
+          title: action.payload.title,
+          content: action.payload.content,
+          status: action.payload.status,
+        };
+      }
+    });
+
     builder.addCase(updateGreeting.pending, (state) => {
       state.loading = true;
     });
@@ -91,6 +143,17 @@ const reducer = createSlice({
     });
     builder.addCase(updateGreeting.rejected, (state) => {
       state.loading = false;
+    });
+
+    builder.addCase(getFileTray.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.fileTray = {
+          background: action.payload.background,
+          title: action.payload.title,
+          status: action.payload.status,
+          noticeErr: action.payload.noticeErr,
+        };
+      }
     });
 
     builder.addCase(updateFileTray.pending, (state) => {
