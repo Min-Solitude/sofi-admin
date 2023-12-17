@@ -11,6 +11,11 @@ const initialState: SettingState = {
     content: "",
     status: false,
   },
+  fileTray: {
+    background: "",
+    title: "",
+    status: false,
+  },
 };
 
 export const updateGreeting = createAsyncThunk(
@@ -41,6 +46,34 @@ export const updateGreeting = createAsyncThunk(
   }
 );
 
+export const updateFileTray = createAsyncThunk(
+  "setting/updateFileTray",
+  async (payload: { background: string; title: string; status: boolean }) => {
+    const noticeRef = collection(db, "setting");
+
+    const docSettings = await getDoc(doc(noticeRef, "FileTray"));
+
+    // Nếu chưa tồn tại, tạo mới
+    if (!docSettings.exists()) {
+      await setDoc(doc(noticeRef, "FileTray"), {
+        background: payload.background,
+        title: payload.title,
+        status: payload.status,
+      });
+    }
+    // Nếu đã tồn tại, update những trường thay đổi
+    else {
+      await updateDoc(doc(noticeRef, "FileTray"), {
+        background: payload.background,
+        title: payload.title,
+        status: payload.status,
+      });
+    }
+
+    return payload;
+  }
+);
+
 const reducer = createSlice({
   name: "setting",
   initialState,
@@ -57,6 +90,18 @@ const reducer = createSlice({
       toast.success("Cập nhật thành công");
     });
     builder.addCase(updateGreeting.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(updateFileTray.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateFileTray.fulfilled, (state, action) => {
+      state.loading = false;
+      state.fileTray = action.payload;
+      toast.success("Cập nhật thành công");
+    });
+    builder.addCase(updateFileTray.rejected, (state) => {
       state.loading = false;
     });
   },

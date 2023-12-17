@@ -8,6 +8,10 @@ const data = [
     {
         label: 'Thông báo tổng',
         value: 'notification'
+    },
+    {
+        label: 'Câu chuyện',
+        value: 'filetray'
     }
 ]
 

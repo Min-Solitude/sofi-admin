@@ -4,6 +4,7 @@ import Section from "../../motion/Section";
 import ManagerGeneralAnnouncement from "./components/ManagerGeneralAnnouncement";
 import ManagerGretting from "./components/ManagerGreeting";
 import SettingBar from "./components/SettingBar";
+import ManagerFileTray from "./components/ManagerFileTray";
 
 export default function SystemPage() {
 
@@ -23,7 +24,10 @@ export default function SystemPage() {
                     {
                         isChoose === 'notification' && <ManagerGeneralAnnouncement className="flex-1" />
                     }
-                    <div className="flex-1 max-w-[16rem] bg-yellow-400 rounded-xl overflow-hidden">
+                    {
+                        isChoose === 'filetray' && <ManagerFileTray className="flex-1" />
+                    }
+                    <div className="flex-1 max-w-[16rem] rounded-xl overflow-hidden">
                         {
                             isChoose === 'greeting' && (
                                 <img src="https://i.pinimg.com/736x/78/d7/5d/78d75d49c1e2a66f4b4a6552c54a4dfc.jpg" alt="" className="w-full h-full object-cover" />
@@ -32,6 +36,11 @@ export default function SystemPage() {
                         {
                             isChoose === 'notification' && (
                                 <img src="https://i.pinimg.com/564x/d8/bf/ad/d8bfadc9869cb97c73d7e86c0a9f143c.jpg" alt="" className="w-full h-full object-cover" />
+                            )
+                        }
+                        {
+                            isChoose === 'filetray' && (
+                                <img src="https://i.pinimg.com/564x/d9/08/67/d90867c18729111b3aab06e5ca5c14ae.jpg" alt="" className="w-full h-full object-cover" />
                             )
                         }
                     </div>
