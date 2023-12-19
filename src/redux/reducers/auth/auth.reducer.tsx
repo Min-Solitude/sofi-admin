@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AuthState, User } from './auth.type'
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { db } from '../../../configs'
 import { toast } from 'react-toastify'
 
@@ -35,6 +35,7 @@ export const getAllUser = createAsyncThunk(
         return users;
     }
 )
+
 
 export const getAllUserVip = createAsyncThunk(
     'auth/getAllUserVip',
