@@ -5,6 +5,7 @@ import ManagerGeneralAnnouncement from "./components/ManagerGeneralAnnouncement"
 import ManagerGretting from "./components/ManagerGreeting";
 import SettingBar from "./components/SettingBar";
 import ManagerFileTray from "./components/ManagerFileTray";
+import ManagerGeneral from "./components/ManagerGeneral";
 
 export default function SystemPage() {
 
@@ -27,6 +28,9 @@ export default function SystemPage() {
                     {
                         isChoose === 'filetray' && <ManagerFileTray className="flex-1" />
                     }
+                     {
+                        isChoose === 'general' && <ManagerGeneral className="flex-1" />
+                    }
                     <div className="flex-1 max-w-[16rem] rounded-xl overflow-hidden">
                         {
                             isChoose === 'greeting' && (
@@ -41,6 +45,11 @@ export default function SystemPage() {
                         {
                             isChoose === 'filetray' && (
                                 <img src="https://i.pinimg.com/564x/d9/08/67/d90867c18729111b3aab06e5ca5c14ae.jpg" alt="" className="w-full h-full object-cover" />
+                            )
+                        }
+                         {
+                            isChoose === 'general' && (
+                                <img src="https://i.pinimg.com/564x/c6/35/b0/c635b0e10d10ffb042bd54cd8900ad6b.jpg" alt="" className="w-full h-full object-cover" />
                             )
                         }
                     </div>

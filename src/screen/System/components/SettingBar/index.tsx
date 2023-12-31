@@ -13,6 +13,11 @@ const data = [
         label: 'Câu chuyện',
         value: 'filetray'
     }
+    ,
+    {
+        label: 'Cài đặt chung',
+        value: 'general'
+    }
 ]
 
 type SettingBarProps = {
