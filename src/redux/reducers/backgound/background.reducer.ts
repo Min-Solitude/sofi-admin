@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { BackgroundState } from './background.type';
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../../configs';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { toast } from 'react-toastify';
@@ -57,7 +57,7 @@ export const updateBackground = createAsyncThunk(
             await updateDoc(doc(noticeRef, payload.name), {
                 name: payload.name,
                 status: true,
-                type : 'free',
+                type : payload.type,
                 backgroundDay : thumbnailDay,
                 backgroundNight : thumbnailNight
               });
@@ -65,7 +65,7 @@ export const updateBackground = createAsyncThunk(
             await setDoc(doc(noticeRef, payload.name), {
                 name: payload.name,
                 status: true,
-                type : 'free',
+                type : payload.type,
                 backgroundDay : thumbnailDay,
                 backgroundNight : thumbnailNight
               });
@@ -74,10 +74,28 @@ export const updateBackground = createAsyncThunk(
         return {
             name: payload.name,
             status: true,
-            type : 'free',
+            type : payload.isKind,
             backgroundDay : thumbnailDay,
             backgroundNight : thumbnailNight
         };
+     } catch (error) {
+            console.log('error', error);
+     }
+    }
+)
+
+export const deleteBackground = createAsyncThunk(
+    'background/deleteBackground',
+    async (payload: any,) => {
+     try {        
+        const noticeRef = collection(db, "background");
+        const docBackground = await getDoc(doc(noticeRef, payload));
+
+        if (docBackground.exists()) {
+            await deleteDoc(doc(noticeRef, payload));
+        }
+
+        return payload;
      } catch (error) {
             console.log('error', error);
      }
@@ -107,6 +125,20 @@ const reducer = createSlice({
         })
         builder.addCase(updateBackground.fulfilled, (state, action) => {
             toast.success('Upload background free successfully');
+            state.loading = false;
+        })
+
+        // delete
+        builder.addCase(deleteBackground.rejected, (state, action) => {
+            toast.error('Delete background failed');
+            state.loading = false;
+        })
+        builder.addCase(deleteBackground.pending, (state, action) => {
+            state.loading = true;
+        })
+        builder.addCase(deleteBackground.fulfilled, (state, action) => {
+            toast.success('Delete background successfully');
+            state.background = state.background.filter((item: any) => item.name !== action.payload);
             state.loading = false;
         })
     }

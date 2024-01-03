@@ -5,6 +5,7 @@ import IonIcon from "@reacticons/ionicons";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useRedux";
 import Swal from "sweetalert2";
 import {
+  deleteBackground,
   getBackground,
   updateBackground,
 } from "../../../../redux/reducers/backgound/background.reducer";
@@ -23,6 +24,7 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
   const [isValueTitle, setIsValueTitle] = useState("");
   const background = useAppSelector((state) => state.background.background);
   const [isValueStatus, setIsValueStatus] = useState(false);
+  const [isKind, setIsKind] = useState(false);
 
   function capitalizeFirstLetter(title: string) {
     return title.replace(/\w\S*/g, function (txt) {
@@ -41,6 +43,7 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
       name: isValueTitleFormat,
       backgroundDay: isBackgroundFreeDay,
       backgroundNight: isBackgroundFreeNight,
+      type: isKind ? "free" : "vip",
     };
 
     dispatch(updateBackground(payload));
@@ -53,8 +56,6 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
   useEffect(() => {
     dispatch(getBackground());
   }, []);
-
-  console.log(background);
 
   return (
     <Section className={`flex flex-col gap-4 ${props.className}`}>
@@ -80,6 +81,16 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
           />
         </div>
       </div>
+      <div className="w-full flex justify-start">
+        <Button>
+          <label
+            htmlFor="my_modal_6"
+            className="font-semibold cursor-pointer bg-gradient-to-r px-4 py-2 rounded-lg from-cyan-500 to-blue-500 text-white"
+          >
+            Thêm ảnh nền miễn phí
+          </label>
+        </Button>
+      </div>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2 items-start">
           <h1 className="font-semibold text-gray-800">Miễn phí</h1>
@@ -90,7 +101,7 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
                 item.type === "free" && (
                   <div
                     key={index}
-                    className="bg-gray-300 rounded-xl overflow-hidden w-[16rem] h-[8rem]"
+                    className="bg-gray-300 rounded-xl overflow-hidden w-[16rem] h-[8rem] relative"
                   >
                     <img
                       src={
@@ -101,19 +112,29 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
                       alt=""
                       className="w-full h-full object-cover"
                     />
+                    <Button
+                      className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-main"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Bạn có muốn xóa ảnh này?",
+                          showDenyButton: true,
+                          confirmButtonText: `Xóa`,
+                          denyButtonText: `Hủy`,
+                        }).then((result) => {
+                          /* Read more about isConfirmed, isDenied below */
+                          if (result.isConfirmed) {
+                            dispatch(deleteBackground(item.name));
+                          }
+                        });
+                      }}
+                    >
+                      <IonIcon name="trash-outline" className="text-2xl" />
+                    </Button>
                   </div>
                 )
             )}
           </div>
           <div className="mt-4">
-            <Button>
-              <label
-                htmlFor="my_modal_6"
-                className="font-semibold cursor-pointer bg-gradient-to-r px-4 py-2 rounded-lg from-cyan-500 to-blue-500 text-white"
-              >
-                Thêm ảnh nền miễn phí
-              </label>
-            </Button>
             <input type="checkbox" id="my_modal_6" className="modal-toggle" />
             <div className="modal" role="dialog">
               <div className="modal-box">
@@ -208,6 +229,25 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
                       )}
                     </label>
                   </div>
+                  <div className="flex items-center gap-2 w-full">
+                    <label
+                      htmlFor="status"
+                      className="font-semibold text-base text-gray-700"
+                    >
+                      Loại nền:{" "}
+                      <span className="ml-2 py-1 px-6  bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-full">
+                        {isKind ? "free" : "vip"}
+                      </span>
+                    </label>
+                    <input
+                      type="checkbox"
+                      className="toggle bg-blue-500 hover:bg-blue-700"
+                      id="status"
+                      name="status"
+                      checked={isKind}
+                      onChange={(e) => setIsKind(e.target.checked)}
+                    />
+                  </div>
                 </div>
                 <div className="modal-action">
                   <Button>
@@ -236,8 +276,48 @@ export default function ManagerBackground(props: ManagerBackgroundProps) {
           </div>
         </div>
         <hr />
-        <div>
+        <div className="flex flex-col gap-4">
           <h1 className="font-semibold text-gray-800">Vip</h1>
+          <div className="flex gap-4 flex-wrap">
+            {// type === free
+            background?.map(
+              (item: any, index) =>
+                item.type === "vip" && (
+                  <div
+                    key={index}
+                    className="bg-gray-300 rounded-xl relative overflow-hidden w-[16rem] h-[8rem]"
+                  >
+                    <img
+                      src={
+                        isValueStatus
+                          ? item.backgroundDay
+                          : item.backgroundNight
+                      }
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                    <Button
+                      className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-main"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Bạn có muốn xóa ảnh này?",
+                          showDenyButton: true,
+                          confirmButtonText: `Xóa`,
+                          denyButtonText: `Hủy`,
+                        }).then((result) => {
+                          /* Read more about isConfirmed, isDenied below */
+                          if (result.isConfirmed) {
+                            dispatch(deleteBackground(item.name));
+                          }
+                        });
+                      }}
+                    >
+                      <IonIcon name="trash-outline" className="text-2xl" />
+                    </Button>
+                  </div>
+                )
+            )}
+          </div>
         </div>
       </div>
     </Section>
