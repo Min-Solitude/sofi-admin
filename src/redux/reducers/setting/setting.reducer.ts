@@ -33,6 +33,20 @@ const initialState: SettingState = {
     profile: false,
     layout: false,
     status: false,
+    title: "",
+  },
+  taskBar: {
+    clock: false,
+    status: false,
+    layout: false,
+  },
+  noti: {
+    banner: "",
+    title: "",
+    content: "",
+    email: false,
+    note: "",
+    status: false,
   },
 };
 
@@ -166,6 +180,7 @@ export const updateHeader = createAsyncThunk(
     profile: boolean;
     layout: boolean;
     status: boolean;
+    title: string;
   }) => {
     try {
       const noticeRef = collection(db, "setting");
@@ -181,6 +196,7 @@ export const updateHeader = createAsyncThunk(
           profile: payload.profile,
           layout: payload.layout,
           status: payload.status,
+          title: payload.title,
         });
       }
       // Nếu đã tồn tại, update những trường thay đổi
@@ -192,6 +208,7 @@ export const updateHeader = createAsyncThunk(
           profile: payload.profile,
           layout: payload.layout,
           status: payload.status,
+          title: payload.title,
         });
       }
 
@@ -230,6 +247,116 @@ export const uploadLogo = createAsyncThunk(
   }
 
   return null;
+  }
+);
+
+// TASKBAR
+export const getTaskBar = createAsyncThunk("setting/getTaskBar", async () => {
+  const noticeRef = collection(db, "setting");
+
+  const docSettings = await getDoc(doc(noticeRef, "TaskBar"));
+
+  if (docSettings.exists()) {
+    return docSettings.data();
+  } else {
+    return {
+      clock: false,
+      status: false,
+      layout: false,
+    };
+  }
+});
+
+export const updateTaskBar = createAsyncThunk(
+  "setting/updateTaskBar",
+  async (payload: {
+    clock: boolean;
+    status: boolean;
+    layout: boolean;
+  }) => {
+    const noticeRef = collection(db, "setting");
+
+    const docSettings = await getDoc(doc(noticeRef, "TaskBar"));
+
+    // Nếu chưa tồn tại, tạo mới
+    if (!docSettings.exists()) {
+      await setDoc(doc(noticeRef, "TaskBar"), {
+        clock: payload.clock,
+        status: payload.status,
+        layout: payload.layout,
+      });
+    }
+    // Nếu đã tồn tại, update những trường thay đổi
+    else {
+      await updateDoc(doc(noticeRef, "TaskBar"), {
+        clock: payload.clock,
+        status: payload.status,
+        layout: payload.layout,
+      });
+    }
+
+    return payload;
+  }
+);
+
+// NOTI
+export const getNoti = createAsyncThunk("setting/getNoti", async () => {
+  const noticeRef = collection(db, "setting");
+
+  const docSettings = await getDoc(doc(noticeRef, "Noti"));
+
+  if (docSettings.exists()) {
+    return docSettings.data();
+  } else {
+    return {
+      banner: "",
+      title: "",
+      content: "",
+      email: false,
+      note: "",
+      status: false,
+    };
+  }
+});
+
+export const updateNoti = createAsyncThunk(
+  "setting/updateNoti",
+  async (payload: {
+    banner: string;
+    title: string;
+    content: string;
+    email: boolean;
+    note: string;
+    status: boolean;
+  }) => {
+    const noticeRef = collection(db, "setting");
+
+    const docSettings = await getDoc(doc(noticeRef, "Noti"));
+
+    // Nếu chưa tồn tại, tạo mới
+    if (!docSettings.exists()) {
+      await setDoc(doc(noticeRef, "Noti"), {
+        banner: payload.banner,
+        title: payload.title,
+        content: payload.content,
+        email: payload.email,
+        note: payload.note,
+        status: payload.status,
+      });
+    }
+    // Nếu đã tồn tại, update những trường thay đổi
+    else {
+      await updateDoc(doc(noticeRef, "Noti"), {
+        banner: payload.banner,
+        title: payload.title,
+        content: payload.content,
+        email: payload.email,
+        note: payload.note,
+        status: payload.status,
+      });
+    }
+
+    return payload;
   }
 );
 
@@ -295,6 +422,7 @@ const reducer = createSlice({
           profile: action.payload.profile,
           layout: action.payload.layout,
           status: true,
+          title: action.payload.title,
         };
       }
     });
@@ -324,6 +452,53 @@ const reducer = createSlice({
       toast.success("Cập nhật thành công");
     });
     builder.addCase(uploadLogo.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(getTaskBar.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.taskBar = {
+          clock: action.payload.clock,
+          status: action.payload.status,
+          layout: action.payload.layout,
+        };
+      }
+    });
+
+    builder.addCase(updateTaskBar.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateTaskBar.fulfilled, (state, action) => {
+      state.loading = false;
+      state.taskBar = action.payload;
+      toast.success("Cập nhật thành công");
+    });
+    builder.addCase(updateTaskBar.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(getNoti.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.noti = {
+          banner: action.payload.banner,
+          title: action.payload.title,
+          content: action.payload.content,
+          email: action.payload.email,
+          note: action.payload.note,
+          status: action.payload.status,
+        };
+      }
+    });
+
+    builder.addCase(updateNoti.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateNoti.fulfilled, (state, action) => {
+      state.loading = false;
+      state.noti = action.payload;
+      toast.success("Cập nhật thành công");
+    });
+    builder.addCase(updateNoti.rejected, (state) => {
       state.loading = false;
     });
   },

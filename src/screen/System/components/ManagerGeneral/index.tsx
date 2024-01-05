@@ -4,18 +4,22 @@ import Button from "../../../../components/customs/Button";
 import Swal from "sweetalert2";
 import IonIcon from "@reacticons/ionicons";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useRedux";
-import { getHeader, updateHeader, uploadLogo } from "../../../../redux/reducers/setting/setting.reducer";
+import {
+  getHeader,
+  updateHeader,
+  uploadLogo,
+} from "../../../../redux/reducers/setting/setting.reducer";
 import Loading from "../../../../components/shared/Loading";
+import TaskBar from "./TaskBar";
 
 type GeneralManagerProps = {
   className?: string;
 };
 
 export default function ManagerGeneral({ className }: GeneralManagerProps) {
-
-    const dispatch = useAppDispatch();
-    const loading = useAppSelector((state) => state.setting.loading);
-    const header = useAppSelector((state) => state.setting.header);
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector((state) => state.setting.loading);
+  const header = useAppSelector((state) => state.setting.header);
 
   const [isLogoUrl, setIsLogoUrl] = React.useState<any>(null);
 
@@ -30,48 +34,47 @@ export default function ManagerGeneral({ className }: GeneralManagerProps) {
     React.useState<boolean>(false);
   const [isValueStatusProfile, setIsValueStatusProfile] =
     React.useState<boolean>(false);
+  const [isValueTitle, setIsValueTitle] = React.useState<string>("");
 
-    const handleUpdateGeneral = () => {
-        if(!isLogoUrl){
-            return Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Bạn chưa chọn logo",
-              });
-
-        }
-
-       
-            dispatch(updateHeader({
-                status: isValueStatus,
-                btnNotice: isValueStatusBtnNotice,
-                btnFullscreen: isValueStatusBtnFullscreen,
-                btnDarkMode: isValueStatusBtnDarkMode,
-                layout: isValueStatusLayout,
-                profile: isValueStatusProfile,
-            }))
-
-        
+  const handleUpdateGeneral = () => {
+    if (!isLogoUrl) {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Bạn chưa chọn logo",
+      });
     }
 
-    useEffect(() => {
-        dispatch(getHeader())
-        if(header){
-            setIsLogoUrl(header.logo)
-            setIsValueStatus(header.status)
-            setIsValueStatusBtnNotice(header.btnNotice)
-            setIsValueStatusBtnFullscreen(header.btnFullscreen)
-            setIsValueStatusBtnDarkMode(header.btnDarkMode)
-            setIsValueStatusLayout(header.layout)
-            setIsValueStatusProfile(header.profile)
-        }
-    }, []);
+    dispatch(
+      updateHeader({
+        status: isValueStatus,
+        btnNotice: isValueStatusBtnNotice,
+        btnFullscreen: isValueStatusBtnFullscreen,
+        btnDarkMode: isValueStatusBtnDarkMode,
+        layout: isValueStatusLayout,
+        profile: isValueStatusProfile,
+        title: isValueTitle,
+      })
+    );
+  };
+
+  useEffect(() => {
+    dispatch(getHeader());
+    if (header) {
+      setIsLogoUrl(header.logo);
+      setIsValueStatus(header.status);
+      setIsValueStatusBtnNotice(header.btnNotice);
+      setIsValueStatusBtnFullscreen(header.btnFullscreen);
+      setIsValueStatusBtnDarkMode(header.btnDarkMode);
+      setIsValueStatusLayout(header.layout);
+      setIsValueStatusProfile(header.profile);
+      setIsValueTitle(header.title);
+    }
+  }, []);
 
   return (
     <Section className={`flex flex-col gap-4 ${className}`}>
-        {
-            loading && <Loading/>
-        }
+      {loading && <Loading />}
       <h1 className="font-bold text-base text-blue-500">Header</h1>
       <div className="flex flex-col gap-4 w-full">
         <div className="flex gap-4 items-start ">
@@ -87,23 +90,25 @@ export default function ManagerGeneral({ className }: GeneralManagerProps) {
             }}
             id="logo"
           />
-         {
-            isLogoUrl ? (
-                <img
-                src={
-                    typeof isLogoUrl === "string"
-                        ? isLogoUrl
-                        : URL.createObjectURL(isLogoUrl)
-                }
-                alt=""
-                className="w-[10rem] rounded-lg border border-gray-200"
+          {isLogoUrl ? (
+            <img
+              src={
+                typeof isLogoUrl === "string"
+                  ? isLogoUrl
+                  : URL.createObjectURL(isLogoUrl)
+              }
+              alt=""
+              className="w-[10rem] rounded-lg border border-gray-200"
+            />
+          ) : (
+            <div className="w-[10rem] h-[8rem] rounded-lg flex justify-center items-center bg-gray-200">
+              <IonIcon
+                name="image-outline"
+                size="large"
+                className="text-gray-400"
               />
-            ) : (
-                <div className="w-[10rem] h-[8rem] rounded-lg flex justify-center items-center bg-gray-200">
-                    <IonIcon name="image-outline" size="large" className="text-gray-400" />
-                </div>
-            )
-         }
+            </div>
+          )}
           <div className="flex flex-col gap-2">
             <label
               htmlFor="logo"
@@ -111,26 +116,24 @@ export default function ManagerGeneral({ className }: GeneralManagerProps) {
             >
               Đổi logo
             </label>
-            {
-                isLogoUrl && (
-                    <Button
-                    className="font-semibold  bg-gradient-to-r py-2 rounded-lg from-cyan-500 to-blue-500 text-white"
-                    onClick={() => {
-                      if(isLogoUrl !== header?.logo){
-                        dispatch(uploadLogo(isLogoUrl))
-                      }else{
-                        return Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Bạn chưa thay đổi logo",
-                          });
-                      }
-                    }}
-                  >
-                    Tải lên
-                  </Button>
-                )
-            }
+            {isLogoUrl && (
+              <Button
+                className="font-semibold  bg-gradient-to-r py-2 rounded-lg from-cyan-500 to-blue-500 text-white"
+                onClick={() => {
+                  if (isLogoUrl !== header?.logo) {
+                    dispatch(uploadLogo(isLogoUrl));
+                  } else {
+                    return Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Bạn chưa thay đổi logo",
+                    });
+                  }
+                }}
+              >
+                Tải lên
+              </Button>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-2 w-full justify-between p-4 rounded-lg border border-gray-200">
@@ -251,15 +254,35 @@ export default function ManagerGeneral({ className }: GeneralManagerProps) {
             checked={isValueStatusProfile}
             onChange={(e) => setIsValueStatusProfile(e.target.checked)}
           />
-          </div>
-
+        </div>
+        <div className="flex flex-col gap-2 w-full">
+          <label
+            htmlFor="title"
+            className="font-semibold text-base text-gray-700"
+          >
+            Tiêu đề header
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Tiêu đề"
+            className="py-3 px-4 rounded-lg border outline-none border-gray-200"
+            value={isValueTitle}
+            onChange={(e) => setIsValueTitle(e.target.value)}
+          />
+        </div>
       </div>
-
-      <Button className="font-semibold  bg-gradient-to-r py-2 rounded-lg from-cyan-500 to-blue-500 text-white"
+      <Button
+        className="font-semibold  bg-gradient-to-r py-2 rounded-lg from-cyan-500 to-blue-500 text-white"
         onClick={() => handleUpdateGeneral()}
       >
         Lưu
       </Button>
+      {/* ====================================================  */}
+      <hr className="my-4" />
+      <h1 className="font-bold text-base text-blue-500">Thanh công cụ</h1>
+      <TaskBar loading={loading} />
     </Section>
   );
 }

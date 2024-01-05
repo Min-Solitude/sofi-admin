@@ -3,6 +3,8 @@ export type SettingState = {
   greeting: SettingGreetings;
   fileTray: SettingFileTray;
   header: SettingHeader;
+  taskBar: SettingTaskBar;
+  noti: SettingNoti;
 };
 
 export type SettingGreetings = {
@@ -28,5 +30,21 @@ export type SettingHeader = {
   btnDarkMode: boolean;
   profile: boolean;
   layout: boolean;
+  status: boolean;
+  title: string;
+}
+
+export type SettingTaskBar = {
+  clock: boolean;
+  status: boolean;
+  layout: boolean;
+}
+
+export type SettingNoti = {
+  banner: string;
+  title: string;
+  content: string;
+  email: boolean;
+  note: string;
   status: boolean;
 }
