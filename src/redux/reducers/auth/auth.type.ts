@@ -19,4 +19,6 @@ export type User = {
     package: string | null;
     isVip: boolean;
   };
+  emailMember?: string;
+  isMember: boolean;
 };

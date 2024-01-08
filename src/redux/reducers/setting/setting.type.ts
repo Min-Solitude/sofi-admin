@@ -38,6 +38,7 @@ export type SettingTaskBar = {
   clock: boolean;
   status: boolean;
   layout: boolean;
+  image: string;
 }
 
 export type SettingNoti = {

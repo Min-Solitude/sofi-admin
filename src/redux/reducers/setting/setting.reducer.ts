@@ -38,6 +38,7 @@ const initialState: SettingState = {
   taskBar: {
     clock: false,
     status: false,
+    image: "",
     layout: false,
   },
   noti: {
@@ -263,6 +264,7 @@ export const getTaskBar = createAsyncThunk("setting/getTaskBar", async () => {
       clock: false,
       status: false,
       layout: false,
+      image: "",
     };
   }
 });
@@ -273,6 +275,7 @@ export const updateTaskBar = createAsyncThunk(
     clock: boolean;
     status: boolean;
     layout: boolean;
+    image: string;
   }) => {
     const noticeRef = collection(db, "setting");
 
@@ -284,6 +287,7 @@ export const updateTaskBar = createAsyncThunk(
         clock: payload.clock,
         status: payload.status,
         layout: payload.layout,
+        image: payload.image,
       });
     }
     // Nếu đã tồn tại, update những trường thay đổi
@@ -292,6 +296,7 @@ export const updateTaskBar = createAsyncThunk(
         clock: payload.clock,
         status: payload.status,
         layout: payload.layout,
+        image: payload.image,
       });
     }
 
@@ -461,6 +466,7 @@ const reducer = createSlice({
           clock: action.payload.clock,
           status: action.payload.status,
           layout: action.payload.layout,
+          image: action.payload.image,
         };
       }
     });

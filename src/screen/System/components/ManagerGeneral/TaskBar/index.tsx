@@ -14,6 +14,7 @@ export default function TaskBar({ loading }: TaskBarProps) {
   const [isValueClock, setIsValueClock] = React.useState<boolean>(true);
   const [isStatus, setIsStatus] = React.useState<boolean>(true);
   const [isLayout, setIsLayout] = React.useState<boolean>(true);
+  const [isImageUrl, setIsImageUrl] = React.useState<string>("");
 
   const taskBar = useAppSelector((state) => state.setting.taskBar);
 
@@ -25,6 +26,7 @@ export default function TaskBar({ loading }: TaskBarProps) {
         clock: isValueClock,
         status: isStatus,
         layout: isLayout,
+        image: isImageUrl,
       })
     );
   };
@@ -36,11 +38,29 @@ export default function TaskBar({ loading }: TaskBarProps) {
       setIsValueClock(taskBar.clock);
       setIsStatus(taskBar.status);
       setIsLayout(taskBar.layout);
+      setIsImageUrl(taskBar.image);
     }
   }, []);
 
   return (
     <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col gap-2 w-full">
+        <label
+          htmlFor="title"
+          className="font-semibold text-base text-gray-700"
+        >
+          Hình ảnh đồng hồ
+        </label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Url hình ảnh"
+          className="py-3 px-4 rounded-lg border outline-none border-gray-200"
+          value={isImageUrl}
+          onChange={(e) => setIsImageUrl(e.target.value)}
+        />
+      </div>
       <div className="flex items-center gap-2 w-full justify-between p-4 rounded-lg border border-gray-200">
         <label
           htmlFor="notice"
