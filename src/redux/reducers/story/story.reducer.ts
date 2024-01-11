@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { StoryState } from "./story.type";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../../configs";
+import Swal from "sweetalert2";
 
 const initialState: StoryState = {
   listStory: [],
@@ -39,6 +40,23 @@ export const getAllStory = createAsyncThunk("story/getAllStory", async () => {
   return stories;
 });
 
+export const updateStatusStory = createAsyncThunk(
+  "story/updateStatusStory",
+  async (data: {
+    id: string;
+    status: 'pending' | 'approved' | 'rejected';
+  }) => {
+
+    const storyRef = doc(db, "stories", data.id);
+
+    await updateDoc(storyRef, {
+      status: data.status,
+    });
+
+    return data;
+  }
+);
+
 const reducer = createSlice({
   name: "story",
   initialState,
@@ -53,6 +71,38 @@ const reducer = createSlice({
     });
     builder.addCase(getAllStory.rejected, (state) => {
       state.loading = false;
+    });
+
+    builder.addCase(updateStatusStory.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateStatusStory.fulfilled, (state, action: any) => {
+      state.loading = false;
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: "Cập nhật trạng thái thành công!",
+      });
+
+      if (state.listStory) {
+        const index = state.listStory.findIndex(
+          (story) => story.uid === action.payload.id  
+        );
+      
+        if (index !== -1) {
+          state.listStory[index].status = action.payload.status;
+      
+          state.listStory = [...state.listStory];
+        }
+      }
+    });
+    builder.addCase(updateStatusStory.rejected, (state) => {
+      state.loading = false;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Cập nhật trạng thái thất bại!",
+      });
     });
   },
 });
