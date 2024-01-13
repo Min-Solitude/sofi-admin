@@ -28,6 +28,11 @@ const routes: Route[] = [
     component: React.lazy(() => import("./Story")),
     layout: MainLayout,
   },
+  {
+    path: "/altar",
+    component: React.lazy(() => import("./Altar")),
+    layout: MainLayout,
+  },
 ];
 
 export default routes;

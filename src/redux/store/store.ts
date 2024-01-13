@@ -18,13 +18,15 @@ import history from "./history";
 import { SettingReducer } from "../reducers/setting/setting.reducer";
 import { StoryReducer } from "../reducers/story/story.reducer";
 import { BackgroundReducer } from "../reducers/backgound/background.reducer";
+import { AltarReducer } from "../reducers/altar/altar.reducer";
 
 const rootReducer = combineReducers({
   router: connectRouter(history),
   auth: AuthReducer,
   setting: SettingReducer,
   story: StoryReducer,
-  background : BackgroundReducer  
+  background : BackgroundReducer ,
+  altar: AltarReducer
 });
 
 type RootState = ReturnType<typeof rootReducer>;
